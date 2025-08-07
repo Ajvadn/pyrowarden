@@ -5,10 +5,10 @@ import { Shield, Radio, Activity, Box } from 'lucide-react';
 const FireCatProject = () => {
   return (
     <ProjectPageLayout
-      title="FireCat's 6th SENSE"
-      subtitle="Advanced safety system for high-risk environments"
-      imageUrl="/lovable-uploads/93ab0638-8190-4ccf-897f-21fda7f4f5ad.png"
-      brandName="FireCat Group"
+      title="FireCat Safety System"
+      subtitle="Advanced fire detection and safety monitoring technology"
+      imageUrl="/placeholder.svg"
+      brandName="Fire Safety Equipment Manufacturer"
       darkMode={true}
     >
       <h2 className="text-3xl font-bold mb-6">Case Study: FireCat's 6th SENSE by Pyrowarden Technologies</h2>

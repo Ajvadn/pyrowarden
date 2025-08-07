@@ -1,83 +1,106 @@
 
-import React from 'react';
-import { Mail, Linkedin, Phone } from 'lucide-react';
+/**
+ * Contact Information Component
+ * 
+ * This component displays contact information for key team members.
+ * It includes email and LinkedIn links for easy communication.
+ */
 
-const ContactInfo = () => {
+import React from 'react';
+import { Mail, Linkedin } from 'lucide-react';
+
+/**
+ * ContactInfo Component
+ * 
+ * Features:
+ * - Team member contact cards
+ * - Email and LinkedIn links
+ * - Responsive design
+ * - Professional styling
+ */
+const ContactInfo: React.FC = () => {
   return (
-    <section id="contact-info" className="bg-gradient-to-b from-white to-black text-white relative py-[15px] md:py-[25px]">
+    <section id="contact-info" className="scroll-mt-24 bg-gradient-to-b from-white to-black text-white relative py-8 md:py-12">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-10 md:mb-16">
-          <div className="inline-block mb-3 px-3 py-1 bg-white text-black rounded-full text-sm font-medium">
+        
+        {/* Section Header */}
+        <div className="text-center mb-6 sm:mb-8 md:mb-10">
+          <div className="inline-block mb-2 px-2 py-1 bg-white text-black rounded-full text-xs font-medium">
             Get In Touch
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-black">
+          <h2 className="section-title text-xl sm:text-2xl md:text-3xl mb-3 text-black">
             Contact Us Today
           </h2>
-           <p className="text-gray-700 text-lg max-w-2xl mx-auto">
+          <p className="hero-subtitle text-gray-700 text-sm sm:text-base max-w-2xl mx-auto">
             Have questions about our professional security tools? Reach out to our team and let's discuss how we can help enhance your cybersecurity capabilities.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Felix's Contact Info */}
-          <div className="bg-white rounded-xl shadow-xl p-6 md:p-8 border border-gray-700">
+        {/* Contact Cards Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
+          
+          {/* Ajvad N Contact Card */}
+          <div className="bg-white rounded-lg shadow-lg p-3 sm:p-4 border border-gray-200">
             <div className="flex flex-col items-center text-center">
               <img 
-                src="/lovable-uploads/ajvad-n.jpg"
+                src="/team-images/ajvad-n.jpeg"
                 alt="Ajvad N"
-                className="w-32 h-32 rounded-full mb-4 object-cover filter grayscale"
+                className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full mb-2 object-cover filter grayscale"
               />
-              <h3 className="text-xl font-bold text-gray-900">Ajvad N</h3>
-              <p className="text-gray-600 mb-4">CEO and Founder</p>
-              <div className="flex flex-col space-y-3">
-                <a href="mailto:ajvadaju2003@gmail.com" className="flex items-center text-gray-700 hover:text-blue-600">
-                  <Mail className="w-5 h-5 mr-2" />
-                  ajvadaju2003@gmail.com
+              <h3 className="team-name text-sm sm:text-base text-gray-900">Ajvad N</h3>
+              <p className="team-role text-gray-600 mb-2 text-xs">CEO and Founder</p>
+              <div className="flex flex-col space-y-1 w-full">
+                <a 
+                  href="mailto:ajvadaju2003@gmail.com" 
+                  className="flex items-center justify-center text-gray-700 hover:text-blue-600 text-xs"
+                >
+                  <Mail className="w-3 h-3 mr-1 flex-shrink-0" />
+                  <span className="truncate">ajvadaju2003@gmail.com</span>
                 </a>
                 <a 
                   href="https://www.linkedin.com/in/ajvad-n?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3Br4cfzbGkQN%2Bs%2BkYK52XkvA%3D%3D" 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center text-gray-700 hover:text-blue-600"
+                  className="flex items-center justify-center text-gray-700 hover:text-blue-600 text-xs"
                 >
-                  <Linkedin className="w-5 h-5 mr-2" />
+                  <Linkedin className="w-3 h-3 mr-1 flex-shrink-0" />
                   LinkedIn Profile
                 </a>
               </div>
             </div>
           </div>
 
-          {/* Love's Contact Info */}
-          <div className="bg-white rounded-xl shadow-xl p-6 md:p-8 border border-gray-700">
+          {/* Jithin PR Contact Card */}
+          <div className="bg-white rounded-lg shadow-lg p-3 sm:p-4 border border-gray-200">
             <div className="flex flex-col items-center text-center">
               <img 
-                src="/lovable-uploads/a9bb9110-964a-43b0-a5ab-7162140cd133.png"
-                alt="Love Anderberg"
-                className="w-32 h-32 rounded-full mb-4 object-cover filter grayscale"
+                src="/team-images/jithin-pr.jpeg"
+                alt="Jithin PR"
+                className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full mb-2 object-cover filter grayscale"
               />
-              <h3 className="text-xl font-bold text-gray-900">Jithin</h3>
-              <p className="text-gray-600 mb-4">COO</p>
-              <div className="flex flex-col space-y-3">
-                <a href="mailto:jithin@pyrowarden.com" className="flex items-center text-gray-700 hover:text-blue-600">
-                  <Mail className="w-5 h-5 mr-2" />
-                  jithin@pyrowarden.com
+              <h3 className="team-name text-sm sm:text-base text-gray-900">Jithin PR</h3>
+              <p className="team-role text-gray-600 mb-2 text-xs">COO</p>
+              <div className="flex flex-col space-y-1 w-full">
+                <a 
+                  href="mailto:jithu4953@gmail.com" 
+                  className="flex items-center justify-center text-gray-700 hover:text-blue-600 text-xs"
+                >
+                  <Mail className="w-3 h-3 mr-1 flex-shrink-0" />
+                  <span className="truncate">jithu4953@gmail.com</span>
                 </a>
                 <a 
-                  href="https://www.linkedin.com/in/love-anderberg-67549a174/" 
+                  href="https://linkedin.com/in/jithin-p-r" 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center text-gray-700 hover:text-blue-600"
+                  className="flex items-center justify-center text-gray-700 hover:text-blue-600 text-xs"
                 >
-                  <Linkedin className="w-5 h-5 mr-2" />
+                  <Linkedin className="w-3 h-3 mr-1 flex-shrink-0" />
                   LinkedIn Profile
-                </a>
-                <a href="tel:+46760149508" className="flex items-center text-gray-700 hover:text-blue-600">
-                  <Phone className="w-5 h-5 mr-2" />
-                  076-014 95 08
                 </a>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>

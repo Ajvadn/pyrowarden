@@ -1,34 +1,57 @@
+/**
+ * Home Page Component
+ * 
+ * This is the main landing page of the Pyrowarden website.
+ * It displays the hero section, features, projects, and other main content.
+ */
 
+import React, { useEffect } from 'react';
 import PageLayout from '@/components/PageLayout';
+import SEO from '@/components/SEO';
 import Hero from '@/components/Hero';
 import Features from '@/components/Features';
 import Projects from '@/components/Projects';
 import WhyWrlds from '@/components/WhyWrlds';
-import SEO from '@/components/SEO';
-import { useEffect } from 'react';
 
-const Index = () => {
-  // Fix any ID conflicts when the page loads
+/**
+ * Index Component
+ * 
+ * Renders the home page with all main sections:
+ * - Hero section with call-to-action
+ * - Features showcasing our services
+ * - Projects portfolio
+ * - Why choose Pyrowarden section
+ * - Contact information
+ */
+const Index: React.FC = () => {
   useEffect(() => {
-    const contactElements = document.querySelectorAll('[id="contact"]');
-    if (contactElements.length > 1) {
-      // If there are multiple elements with id="contact", rename one
-      contactElements[1].id = 'contact-footer';
-    }
+    console.log('Index component: Component mounted successfully');
   }, []);
+
+  console.log('Index component: Rendering...');
 
   return (
     <PageLayout>
+      {/* SEO Meta Tags */}
       <SEO 
-        title="PYROWARDEN - Professional Security Tools" 
-        description="Professional-grade hacking tools and cybersecurity equipment for ethical hackers, penetration testers, and security researchers."
-        imageUrl="/lovable-uploads/526dc38a-25fa-40d4-b520-425b23ae0464.png"
-        keywords={['hacking tools', 'penetration testing', 'cybersecurity equipment', 'RFID tools', 'WiFi security', 'hardware hacking', 'security research']}
+        title="Pyrowarden - Professional Cybersecurity Tools & Training"
+        description="Get hands-on experience through our intensive 1-month tech internships and access professional cybersecurity tools for ethical hackers and security professionals."
+        name="Pyrowarden"
+        type="website"
+        imageUrl="/og-image.png"
       />
+      
+      {/* Hero Section */}
       <Hero />
+      
+      {/* Features Section */}
       <Features />
-      <WhyWrlds />
+      
+      {/* Projects Section */}
       <Projects />
+      
+      {/* Why Choose Pyrowarden Section */}
+      <WhyWrlds />
     </PageLayout>
   );
 };

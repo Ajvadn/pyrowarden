@@ -1,14 +1,25 @@
 import ProjectPageLayout from '@/components/ProjectPageLayout';
 import { Thermometer, ShieldCheck, Mountain, FileSymlink, Cpu, FlaskConical } from 'lucide-react';
+import { motion } from "framer-motion";
+import { ArrowLeft, CheckCircle, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import SEO from '@/components/SEO';
 
 const WorkwearProject = () => {
   return (
     <ProjectPageLayout
       title="Workwear Climate Control"
       subtitle="Intelligent temperature regulation for extreme work environments"
-      imageUrl="/lovable-uploads/6b0637e9-4a7b-40d0-b219-c8b7f879f93e.png"
+      imageUrl="/placeholder.svg"
       brandName="European Multinational Textile Producer"
     >
+      <SEO 
+        title="Workwear Project - Pyrowarden Technologies"
+        description="Innovative workwear solutions with embedded sensors for safety monitoring and performance tracking."
+        name="Pyrowarden"
+        type="article"
+        imageUrl="/og-image.png"
+      />
       <div className="bg-yellow-50 p-4 rounded-lg mb-6 flex items-center">
         <FlaskConical className="h-5 w-5 text-yellow-600 mr-2 flex-shrink-0" />
         <p className="text-yellow-700 font-medium text-sm">Ongoing R&D Project — Currently in Prototyping Phase</p>

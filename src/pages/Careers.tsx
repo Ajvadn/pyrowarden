@@ -83,29 +83,25 @@ const Careers = () => {
                     <div className="bg-white rounded-xl p-6 border border-gray-200">
                       <div className="flex flex-col items-center text-center">
                         <img 
-                          src="/lovable-uploads/a9bb9110-964a-43b0-a5ab-7162140cd133.png"
-                          alt="Love Anderberg"
+                          src="/team-images/jithin-pr.jpeg"
+                          alt="Jithin PR"
                           className="w-32 h-32 rounded-full mb-4 object-cover filter grayscale"
                         />
-                        <h3 className="text-xl font-bold text-gray-900">Love Anderberg</h3>
+                        <h3 className="text-xl font-bold text-gray-900">Jithin PR</h3>
                         <p className="text-gray-600 mb-4">COO</p>
                         <div className="flex flex-col space-y-3">
-                          <a href="mailto:love@pyrowarden.com" className="flex items-center text-gray-700 hover:text-blue-600">
+                          <a href="mailto:jithu4953@gmail.com" className="flex items-center text-gray-700 hover:text-blue-600">
                             <Mail className="w-5 h-5 mr-2" />
-                            love@pyrowarden.com
+                            jithu4953@gmail.com
                           </a>
                           <a 
-                            href="https://www.linkedin.com/in/love-anderberg-67549a174/" 
+                            href="https://linkedin.com/in/jithin-p-r" 
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center text-gray-700 hover:text-blue-600"
                           >
                             <Linkedin className="w-5 h-5 mr-2" />
                             LinkedIn Profile
-                          </a>
-                          <a href="tel:+46760149508" className="flex items-center text-gray-700 hover:text-blue-600">
-                            <Phone className="w-5 h-5 mr-2" />
-                            076-014 95 08
                           </a>
                         </div>
                       </div>

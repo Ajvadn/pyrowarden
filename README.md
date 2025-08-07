@@ -1,69 +1,79 @@
-# Welcome to your Lovable project
+# PyroWarden Technologies
 
-## Project info
+A professional cybersecurity tools and training platform built with React, TypeScript, and Tailwind CSS.
 
-**URL**: https://lovable.dev/projects/ec1d4f1e-2506-4da5-a91b-34afa90cceb6
+## 🚀 Features
 
-## How can I edit this code?
+- **Professional Security Tools**: Curated collection of cybersecurity tools for ethical hackers
+- **Tech Internships**: 1-month intensive training programs
+- **Modern UI**: Clean, responsive design with monospace typography
+- **Team Profiles**: Contact information for key team members
 
-There are several ways of editing your application.
+## 🛠️ Tech Stack
 
-**Use Lovable**
+- **Frontend**: React 18 + TypeScript
+- **Styling**: Tailwind CSS + Shadcn/ui
+- **Build Tool**: Vite
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
+- **Routing**: React Router DOM
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/ec1d4f1e-2506-4da5-a91b-34afa90cceb6) and start prompting.
+## 📦 Installation
 
-Changes made via Lovable will be committed automatically to this repo.
+1. Clone the repository:
+```bash
+git clone <your-repo-url>
+cd pyrowarden
+```
 
-**Use your preferred IDE**
+2. Install dependencies:
+```bash
+npm install
+```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+3. Start the development server:
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+4. Open [http://localhost:8080](http://localhost:8080) in your browser.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🏗️ Build
 
-**Use GitHub Codespaces**
+```bash
+npm run build
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📁 Project Structure
 
-## What technologies are used for this project?
+```
+src/
+├── components/     # Reusable UI components
+├── pages/         # Page components
+├── assets/        # Static assets (images)
+├── hooks/         # Custom React hooks
+├── lib/           # Utility functions
+└── data/          # Static data
+```
 
-This project is built with .
+## 🎨 Design System
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- **Typography**: JetBrains Mono (monospace) for technical content
+- **Logo**: Orbitron font with gradient effect
+- **Colors**: Professional gray and blue palette
+- **Layout**: Compact, desktop-optimized design
 
-## How can I deploy this project?
+## 👥 Team
 
-Simply open [Lovable](https://lovable.dev/projects/ec1d4f1e-2506-4da5-a91b-34afa90cceb6) and click on Share -> Publish.
+- **Ajvad N**: CEO and Founder
+- **Jithin PR**: COO
+- **Vaishnav**: Software Lead
+- **Afeef M**: Full Stack Developer
 
-## I want to use a custom domain - is that possible?
+## 📄 License
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+This project is proprietary software developed by PyroWarden Technologies.
+
+## 🤝 Contributing
+
+This is a private project. For inquiries, please contact the team through the website.

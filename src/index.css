@@ -1,5 +1,7 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -51,7 +53,203 @@
   }
 
   body {
-    @apply bg-white text-foreground font-space;
+    @apply bg-white text-foreground;
+    font-family: 'JetBrains Mono', 'Latin Modern Mono', 'Courier New', monospace;
+    font-feature-settings: 'liga' 1, 'calt' 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    line-height: 1.6;
+  }
+
+  /* Logo Typography */
+  .logo-text {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Headings with Latin Modern Mono */
+  h1, .h1 {
+    font-family: 'JetBrains Mono', 'Latin Modern Mono', monospace;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+  }
+
+  h2, .h2 {
+    font-family: 'JetBrains Mono', 'Latin Modern Mono', monospace;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+  }
+
+  h3, .h3 {
+    font-family: 'JetBrains Mono', 'Latin Modern Mono', monospace;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    line-height: 1.4;
+  }
+
+  h4, .h4 {
+    font-family: 'JetBrains Mono', 'Latin Modern Mono', monospace;
+    font-weight: 500;
+    letter-spacing: 0.005em;
+    line-height: 1.4;
+  }
+
+  h5, .h5 {
+    font-family: 'JetBrains Mono', 'Latin Modern Mono', monospace;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1.4;
+  }
+
+  h6, .h6 {
+    font-family: 'JetBrains Mono', 'Latin Modern Mono', monospace;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1.4;
+  }
+
+  /* Body Text */
+  p, span, div {
+    font-family: 'JetBrains Mono', 'Latin Modern Mono', monospace;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  /* Button Typography */
+  button, .btn {
+    font-family: 'JetBrains Mono', 'Latin Modern Mono', monospace;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  /* Navigation Typography */
+  nav, .nav {
+    font-family: 'JetBrains Mono', 'Latin Modern Mono', monospace;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  /* Card and Content Typography */
+  .card-title {
+    font-family: 'JetBrains Mono', 'Latin Modern Mono', monospace;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  .card-subtitle {
+    font-family: 'JetBrains Mono', 'Latin Modern Mono', monospace;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  .card-body {
+    font-family: 'JetBrains Mono', 'Latin Modern Mono', monospace;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  /* Hero and Display Typography */
+  .hero-title {
+    font-family: 'JetBrains Mono', 'Latin Modern Mono', monospace;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+  }
+
+  .hero-subtitle {
+    font-family: 'JetBrains Mono', 'Latin Modern Mono', monospace;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    line-height: 1.6;
+  }
+
+  /* Feature and Section Typography */
+  .feature-title {
+    font-family: 'JetBrains Mono', 'Latin Modern Mono', monospace;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  .section-title {
+    font-family: 'JetBrains Mono', 'Latin Modern Mono', monospace;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  /* Team and Contact Typography */
+  .team-name {
+    font-family: 'JetBrains Mono', 'Latin Modern Mono', monospace;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  .team-role {
+    font-family: 'JetBrains Mono', 'Latin Modern Mono', monospace;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  /* Monospace specific improvements */
+  .mono-text {
+    font-family: 'JetBrains Mono', 'Latin Modern Mono', monospace;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+  }
+
+  /* Code-like styling for cybersecurity theme */
+  .cyber-text {
+    font-family: 'JetBrains Mono', 'Latin Modern Mono', monospace;
+    font-weight: 500;
+    color: #00ff00;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+  }
+}
+
+/* Compact Desktop Styles */
+@media (min-width: 768px) {
+  .section-container {
+    @apply w-full px-4 sm:px-6 lg:px-8 py-6;
+  }
+
+  .compact-section {
+    @apply py-8 md:py-12;
+  }
+
+  .compact-card {
+    @apply p-3 sm:p-4;
+  }
+
+  .compact-text {
+    @apply text-sm;
+  }
+
+  .compact-heading {
+    @apply text-lg sm:text-xl md:text-2xl;
+  }
+
+  .compact-spacing {
+    @apply space-y-2 sm:space-y-3;
+  }
+
+  .compact-grid {
+    @apply gap-3 sm:gap-4;
+  }
+
+  .compact-margin {
+    @apply mb-4 sm:mb-6;
+  }
+
+  .compact-padding {
+    @apply p-2 sm:p-3;
   }
 }
 
@@ -94,10 +292,12 @@
 }
 
 .banner-title {
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-family: 'JetBrains Mono', 'Latin Modern Mono', monospace;
   font-weight: 700;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
   margin-bottom: 1rem;
   line-height: 1.2;
+  letter-spacing: 0.02em;
 }
 
 @media (min-width: 768px) {
@@ -108,9 +308,12 @@
 }
 
 .banner-subtitle {
+  font-family: 'JetBrains Mono', 'Latin Modern Mono', monospace;
+  font-weight: 400;
   font-size: clamp(1rem, 2.5vw, 1.2rem);
   max-width: 90%;
-  line-height: 1.5;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
 }
 
 @media (min-width: 768px) {

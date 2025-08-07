@@ -6,10 +6,10 @@ import { Footprints, Zap, LineChart, Award, Sparkles, FlaskConical } from 'lucid
 const SportRetailProject = () => {
   return (
     <ProjectPageLayout
-      title="Performance Athletic Footwear"
-      subtitle="Revolutionary R&D for next-generation athletic footwear"
-      imageUrl="/lovable-uploads/b0622048-17b4-4c75-a3f0-6c9e17de1d09.png"
-      brandName="Global Sports Retail Leader"
+      title="Sport Retail Analytics"
+      subtitle="Comprehensive data insights for sport retail optimization"
+      imageUrl="/placeholder.svg"
+      brandName="Major Sport Retail Chain"
     >
       <SEO 
         title="Pyrowarden - Performance Athletic Footwear Project" 

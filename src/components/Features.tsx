@@ -1,16 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { Activity, Shield, HardHat, Zap, ArrowRight, Box, Truck, Code, CheckCircle, Rocket, Factory, Microchip, Handshake, RefreshCcw, MessageSquare } from "lucide-react";
+import { Activity, Shield, HardHat, Zap, ArrowRight, Star, Sparkles, Target, Award } from "lucide-react";
 import { cn } from '@/lib/utils';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent } from "@/components/ui/card";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Link } from 'react-router-dom';
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
-import { Progress } from "@/components/ui/progress";
-import { useIsMobile } from '@/hooks/use-mobile';
 import { Button } from "@/components/ui/button";
-import { useScrollHijack } from '@/hooks/useScrollHijack';
+import { useIsMobile } from '@/hooks/use-mobile';
 import wifiTestingDevice from '@/assets/wifi-testing-device.webp';
 import rfidTool from '@/assets/rfid-tool.webp';
 import hardwareToolkit from '@/assets/hardware-toolkit.webp';
@@ -18,41 +11,47 @@ import badgeFlipper from '@/assets/badge-flipper.webp';
 
 const Features = () => {
   const featuresRef = useRef<HTMLDivElement>(null);
-  const hijackSectionRef = useRef<HTMLDivElement>(null);
   const [hoveredFeature, setHoveredFeature] = useState<number | null>(null);
-  const [progressValue, setProgressValue] = useState(0);
-  const [currentSprint, setCurrentSprint] = useState(1);
-  const totalSprints = 3;
   const isMobile = useIsMobile();
 
   const features = [
     {
-      icon: <Activity className="w-10 h-10 text-white transition-transform duration-300 transform" />,
-      title: "Network Security",
-      description: "Advanced wireless testing equipment for penetration testing, network analysis, and vulnerability assessment in corporate environments.",
-      image: wifiTestingDevice
+      icon: <Activity className="w-8 h-8 text-blue-600" />,
+      title: "Network Security Tools",
+      description: "Advanced wireless testing equipment for penetration testing and network analysis.",
+      image: wifiTestingDevice,
+      category: "Network",
+      rating: 4.9,
+      badge: "Popular"
     },
     {
-      icon: <Shield className="w-10 h-10 text-white transition-transform duration-300 transform" />,
-      title: "Physical Security",
-      description: "RFID cloning tools, lock picking sets, and access control bypass equipment for comprehensive security assessments.",
-      image: rfidTool
+      icon: <Shield className="w-8 h-8 text-green-600" />,
+      title: "Physical Security Kits",
+      description: "RFID cloning tools and access control bypass equipment for security assessments.",
+      image: rfidTool,
+      category: "Physical",
+      rating: 4.8,
+      badge: "New"
     },
     {
-      icon: <HardHat className="w-10 h-10 text-white transition-transform duration-300 transform" />,
-      title: "Hardware Hacking",
-      description: "Embedded systems analysis tools, JTAG programmers, and circuit debugging equipment for IoT device security research.",
-      image: hardwareToolkit
+      icon: <HardHat className="w-8 h-8 text-orange-600" />,
+      title: "Hardware Hacking Tools",
+      description: "Embedded systems analysis tools and circuit debugging equipment for IoT research.",
+      image: hardwareToolkit,
+      category: "Hardware",
+      rating: 4.7,
+      badge: "Featured"
     },
     {
-      icon: <Zap className="w-10 h-10 text-white transition-transform duration-300 transform" />,
-      title: "Social Engineering",
-      description: "Educational phishing kits and awareness training tools for testing human factor vulnerabilities in organizations.",
-      image: badgeFlipper
+      icon: <Zap className="w-8 h-8 text-purple-600" />,
+      title: "Social Engineering Kits",
+      description: "Educational phishing kits and awareness training tools for human factor testing.",
+      image: badgeFlipper,
+      category: "Social",
+      rating: 4.6,
+      badge: "Limited"
     }
   ];
-
-  const { isHijacked, currentIndex } = useScrollHijack(hijackSectionRef, features.length);
 
   const scrollToContact = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -68,419 +67,182 @@ const Features = () => {
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('animate-slide-in');
-          (entry.target as HTMLElement).style.opacity = '1';
+          entry.target.classList.add('animate-fade-in');
           observer.unobserve(entry.target);
         }
       });
     }, {
       threshold: 0.1
     });
+    
     if (featuresRef.current) {
-      const elements = featuresRef.current.querySelectorAll('.feature-item');
+      const elements = featuresRef.current.querySelectorAll('.feature-card');
       elements.forEach(el => {
-        if (!el.classList.contains('animate-slide-in')) {
-          (el as HTMLElement).style.opacity = '0';
-          observer.observe(el);
-        }
+        observer.observe(el);
       });
     }
+    
     return () => observer.disconnect();
   }, []);
-  
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    const animateProgress = () => {
-      setProgressValue(0);
-      interval = setInterval(() => {
-        setProgressValue(prev => {
-          if (prev >= 100) {
-            clearInterval(interval);
-            setTimeout(() => {
-              setCurrentSprint(prev => prev < totalSprints ? prev + 1 : 1);
-              animateProgress();
-            }, 500);
-            return 100;
-          }
-          return prev + 2;
-        });
-      }, 100);
-    };
-    animateProgress();
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, []);
 
-  // Remove the old sensorCaseStudies and add new tech-related use cases
-  const startupUseCases = [
-    {
-      image: hardwareToolkit,
-      title: "Affordable Paid Internships",
-      description: "1-2 month paid internships for students and beginners, providing real-world experience in cybersecurity and hardware programming at a low cost."
-    },
-    {
-      image: wifiTestingDevice,
-      title: "Pre-Programmed Hacking Tools",
-      description: "Ready-to-use ESP32, ESP8266, and other hardware tools for ethical hacking, penetration testing, and rapid prototyping."
-    }
-  ];
-  const stepFlowItems = [{
-    icon: <Microchip className="h-10 w-10 text-gray-700" />,
-    title: "Pyrowarden Proprietary Modules",
-    description: "Our core technology components developed in-house"
-  }, {
-    icon: <Factory className="h-10 w-10 text-gray-700" />,
-    title: "Vetted Off-the-Shelf Hardware",
-    description: "Carefully selected components that complement our technology"
-  }, {
-    icon: <Handshake className="h-10 w-10 text-gray-700" />,
-    title: "Vetted Production Partners",
-    description: "Expert manufacturing partners for quality and reliability"
-  }];
-  const sprintPhases = [{
-    name: "Planning",
-    icon: <CheckCircle className="h-4 w-4" />
-  }, {
-    name: "Development",
-    icon: <Code className="h-4 w-4" />
-  }, {
-    name: "Testing",
-    icon: <Box className="h-4 w-4" />
-  }, {
-    name: "Review",
-    icon: <RefreshCcw className="h-4 w-4" />
-  }];
-
-  return <>
-      <section id="features" className="relative bg-white overflow-hidden py-10 md:py-[50px] w-full">
-        <div className="w-full px-4 sm:px-6 lg:px-8" ref={featuresRef}> 
-          <div className="text-center mb-10 max-w-3xl mx-auto feature-item">
-            <div className="inline-block mb-2 px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
-              Security Tool Categories
-            </div>
-            <p className="text-gray-600 mt-4">
-              Our professional-grade security tools cover every aspect of cybersecurity testing, from network penetration to hardware analysis and social engineering assessment.
-            </p>
+  return (
+    <section id="features" className="relative bg-gradient-to-b from-gray-50 to-white py-8 md:py-12 w-full">
+      <div className="w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" ref={featuresRef}>
+        
+        {/* Header Section */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center gap-2 mb-3 px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-medium">
+            <Sparkles className="w-3 h-3" />
+            Featured Products
           </div>
-          
-          {/* Scroll-hijacked features section */}
-          <div 
-            ref={hijackSectionRef}
-            className={cn(
-              "relative transition-all duration-500",
-              isHijacked ? "fixed inset-0 z-50 bg-black" : "grid grid-cols-1 md:grid-cols-2 gap-5"
-            )}
-            style={{ height: isHijacked ? '100vh' : 'auto' }}
-          >
-            {isHijacked && (
-              <div className="absolute top-4 right-4 z-10 text-white text-sm opacity-70">
-                {currentIndex + 1} / {features.length}
-              </div>
-            )}
-            
-            {features.map((feature, index) => (
-              <div 
-                key={index} 
-                className={cn(
-                  "feature-item rounded-xl overflow-hidden transform transition-all duration-500 relative shadow-lg",
-                  isHijacked 
-                    ? cn(
-                        "absolute inset-0 w-full h-full",
-                        index === currentIndex 
-                          ? "opacity-100 translate-x-0" 
-                          : index < currentIndex 
-                            ? "opacity-0 -translate-x-full" 
-                            : "opacity-0 translate-x-full"
-                      )
-                    : "hover:-translate-y-1 h-[280px]"
-                )}
-                style={{
-                  transitionDelay: isHijacked ? '0ms' : `${index * 100}ms`
-                }}
-                onMouseEnter={() => !isHijacked && setHoveredFeature(index)} 
-                onMouseLeave={() => !isHijacked && setHoveredFeature(null)}
-              >
-                <div className="absolute inset-0 w-full h-full">
+          <h2 className="section-title text-2xl md:text-3xl lg:text-4xl text-gray-900 mb-4">
+            Professional Security Tools
+          </h2>
+          <p className="hero-subtitle text-sm md:text-base text-gray-600 max-w-3xl mx-auto">
+            Discover our curated collection of cutting-edge cybersecurity tools designed for professionals, 
+            researchers, and ethical hackers. Each tool is carefully selected for quality and effectiveness.
+          </p>
+        </div>
+
+        {/* Products Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {features.map((feature, index) => (
+            <Card 
+              key={index}
+              className={cn(
+                "feature-card group cursor-pointer border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden bg-white",
+                "transform hover:-translate-y-2 hover:scale-105",
+                "opacity-0 translate-y-8"
+              )}
+              onMouseEnter={() => setHoveredFeature(index)}
+              onMouseLeave={() => setHoveredFeature(null)}
+              style={{
+                animationDelay: `${index * 150}ms`
+              }}
+            >
+              <CardContent className="p-0">
+                {/* Image Container */}
+                <div className="relative overflow-hidden">
                   <img 
                     src={feature.image} 
-                    alt={feature.title} 
-                    className={cn(
-                      "w-full h-full object-cover transition-all duration-300",
-                      isHijacked ? "grayscale-0" : "grayscale"
-                    )} 
+                    alt={feature.title}
+                    className="w-full h-32 object-cover transition-transform duration-500 group-hover:scale-110"
                   />
-                  <div className={cn(
-                    "absolute inset-0 transition-opacity duration-300",
-                    isHijacked 
-                      ? "bg-black/40" 
-                      : hoveredFeature === index 
-                        ? "bg-black/50" 
-                        : "bg-black/70"
-                  )}></div>
-                </div>
-                
-                <div className={cn(
-                  "relative z-10 flex flex-col justify-center",
-                  isHijacked 
-                    ? "p-16 h-full text-center items-center" 
-                    : "p-6 h-full justify-between"
-                )}>
-                  <div className={isHijacked ? "space-y-8" : ""}>
-                    <div className={cn(
-                      "inline-block p-3 bg-gray-800/40 backdrop-blur-sm rounded-lg transition-all duration-300 transform",
-                      isHijacked 
-                        ? "mb-6 scale-150" 
-                        : hoveredFeature === index 
-                          ? "mb-4 hover:scale-110" 
-                          : "mb-4"
+                  
+                  {/* Overlay with badge */}
+                  <div className="absolute top-2 right-2">
+                    <span className={cn(
+                      "px-1.5 py-0.5 text-xs font-semibold rounded-full text-white",
+                      feature.badge === "Popular" && "bg-red-500",
+                      feature.badge === "New" && "bg-green-500",
+                      feature.badge === "Featured" && "bg-blue-500",
+                      feature.badge === "Limited" && "bg-purple-500"
                     )}>
-                      <div className={`transform transition-transform duration-300 ${!isHijacked && hoveredFeature === index ? 'rotate-12' : ''}`}>
-                        {feature.icon}
-                      </div>
-                    </div>
-                    <h3 className={cn(
-                      "font-semibold text-white",
-                      isHijacked ? "text-4xl mb-6" : "text-xl mb-2"
-                    )}>
-                      {feature.title}
-                    </h3>
-                    <p className={cn(
-                      "text-white/90",
-                      isHijacked ? "text-lg max-w-2xl" : "text-sm"
-                    )}>
-                      {feature.description}
-                    </p>
+                      {feature.badge}
+                    </span>
                   </div>
-                  {!isHijacked && (
-                    <div className={`h-0.5 bg-white/70 mt-3 transition-all duration-500 ${hoveredFeature === index ? 'w-full' : 'w-0'}`}></div>
-                  )}
+                  
+                  {/* Category tag */}
+                  <div className="absolute top-2 left-2">
+                    <span className="px-1.5 py-0.5 text-xs font-medium bg-black/70 text-white rounded-full backdrop-blur-sm">
+                      {feature.category}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))}
-            
-            {isHijacked && (
-              <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white text-center">
-                <div className="flex space-x-2 mb-4">
-                  {features.map((_, index) => (
-                    <div 
-                      key={index}
-                      className={cn(
-                        "w-2 h-2 rounded-full transition-all duration-300",
-                        index === currentIndex ? "bg-white w-8" : "bg-white/50"
-                      )}
-                    />
-                  ))}
-                </div>
-                <p className="text-sm opacity-70">
-                  {isMobile ? "Swipe" : "Scroll"} to continue • Press ESC to exit
-                </p>
-              </div>
-            )}
-          </div>
 
-          {/* Replace Textile Sensor Applications section with Startup Use Cases */}
-          <div className="mt-16 mb-8 feature-item">
-            <div className="text-center mb-8">
-              <div className="inline-block mb-2 px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
-                What We Offer
+                {/* Content */}
+                <div className="p-4">
+                  {/* Icon and Rating */}
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="p-1.5 bg-gray-100 rounded-lg group-hover:bg-gray-200 transition-colors">
+                      {feature.icon}
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Star className="w-3 h-3 text-yellow-400 fill-current" />
+                      <span className="text-xs font-medium text-gray-700">{feature.rating}</span>
+                    </div>
+                  </div>
+
+                  {/* Title and Description */}
+                  <h3 className="feature-title text-sm text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                    {feature.title}
+                  </h3>
+                  <p className="card-body text-gray-600 text-xs mb-3">
+                    {feature.description}
+                  </p>
+
+                  {/* Action Button */}
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="w-full text-xs group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 transition-all duration-300"
+                  >
+                    Learn More
+                    <ArrowRight className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* Call to Action */}
+        <div className="text-center">
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-6 md:p-8 text-white">
+            <div className="max-w-3xl mx-auto">
+              <div className="flex justify-center mb-4">
+                <div className="p-2 bg-white/20 rounded-full">
+                  <Target className="w-6 h-6" />
+                </div>
               </div>
-              <h3 className="text-2xl font-bold">Startup Use Cases</h3>
-              <p className="text-gray-600 mt-3 max-w-2xl mx-auto">
-                Explore our core offerings: affordable paid internships and pre-programmed hacking tools for aspiring tech professionals.
+              <h3 className="hero-title text-xl md:text-2xl mb-3">
+                Ready to Level Up Your Security Skills?
+              </h3>
+              <p className="hero-subtitle text-sm md:text-base text-blue-100 mb-6">
+                Join our community of cybersecurity professionals and get access to the latest tools and training programs.
               </p>
-            </div>
-            <div className="rounded-xl overflow-hidden bg-white p-4 feature-item">
-              <Carousel className="w-full max-w-7xl mx-auto">
-                <CarouselContent className="flex">
-                  {startupUseCases.map((useCase, index) => <CarouselItem key={index} className="md:basis-1/2 flex-shrink-0">
-                    <Card className="border border-gray-100 shadow-md">
-                      <CardContent className="p-0">
-                        <div className="w-full h-full">
-                          <img src={useCase.image} alt={useCase.title} className="w-full h-auto object-contain" />
-                        </div>
-                        <div className="p-4">
-                          <h4 className="font-semibold text-lg">{useCase.title}</h4>
-                          <p className="text-sm text-gray-600 mt-2">{useCase.description}</p>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </CarouselItem>)}
-                </CarouselContent>
-                <div className="flex justify-center mt-6 gap-2">
-                  <CarouselPrevious className="relative static left-auto translate-y-0 hover:bg-gray-100" />
-                  <CarouselNext className="relative static right-auto translate-y-0 hover:bg-gray-100" />
-                </div>
-              </Carousel>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Button 
+                  size="sm" 
+                  className="bg-white text-blue-600 hover:bg-gray-100 font-semibold"
+                  onClick={scrollToContact}
+                >
+                  <Award className="w-4 h-4 mr-1" />
+                  Get Started Today
+                </Button>
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="border-white text-white hover:bg-white hover:text-blue-600 font-semibold"
+                >
+                  View All Products
+                  <ArrowRight className="w-4 h-4 ml-1" />
+                </Button>
+              </div>
             </div>
           </div>
         </div>
-        <div className="text-center mt-12 flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
-          <Button onClick={scrollToContact} className="inline-flex items-center px-4 sm:px-6 py-3 bg-gray-700 hover:bg-gray-800 text-white rounded-lg shadow-md hover:shadow-lg transition-all group w-full sm:w-auto">
-            Need Custom Solutions?
-            <MessageSquare className="ml-2 w-4 h-4 group-hover:animate-pulse" />
-          </Button>
-          
-          <Button onClick={() => window.scrollTo(0, 0)} className="inline-flex items-center px-4 sm:px-6 py-3 bg-white text-gray-700 rounded-lg border border-gray-200 hover:bg-gray-50 hover:shadow-md transition-all group w-full sm:w-auto">
-            Learn More About Our Technology
-            <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Button>
-        </div>
-      </section>
-      
-      <section id="technology" className="bg-gray-50 py-10 md:py-16">
-        <div className="w-full px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="inline-block mb-2 px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
-              Our Approach
-            </div>
-            <h2 className="text-3xl font-bold mb-4">How our technology works</h2>
-            <p className="text-gray-600 max-w-3xl mx-auto">
-              Pyrowarden builds hardware and software with proprietary and off-the-shelf modules, 
-              allowing us to develop completely unique solutions at high speed and lower risk.
-            </p>
-          </div>
-          
-          <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 mb-10 transition-all duration-300 hover:shadow-xl">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-              {stepFlowItems.map((item, index) => <HoverCard key={index}>
-                  <HoverCardTrigger asChild>
-                    <div className="bg-gradient-to-br from-white to-gray-50 rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 h-full cursor-pointer">
-                      <div className="flex flex-col items-center text-center">
-                        <div className="bg-gray-50 rounded-full p-4 mb-4">
-                          {item.icon}
-                        </div>
-                        <h3 className="text-lg font-bold mb-2">{item.title}</h3>
-                        <p className="text-sm text-gray-600">{item.description}</p>
-                      </div>
-                    </div>
-                  </HoverCardTrigger>
-                  <HoverCardContent className="w-80 shadow-lg">
-                    <div className="space-y-2">
-                      <h4 className="text-sm font-semibold">{item.title}</h4>
-                      <p className="text-sm">{item.description}</p>
-                      {index === 0 && <p className="text-xs text-gray-500">Our proprietary technology provides the core foundation of every solution we build.</p>}
-                      {index === 1 && <p className="text-xs text-gray-500">We carefully select the best off-the-shelf components to complement our proprietary technology.</p>}
-                      {index === 2 && <p className="text-xs text-gray-500">Our network of production partners ensures quality manufacturing at scale.</p>}
-                    </div>
-                  </HoverCardContent>
-                </HoverCard>)}
-            </div>
+      </div>
 
-            <div className="relative h-16 mb-10">
-              <div className="hidden md:block absolute left-1/2 -translate-x-1/2 w-1 h-full bg-gradient-to-b from-gray-300 to-gray-400"></div>
-              <div className="hidden md:block absolute left-1/2 -translate-x-1/2 top-full -mt-3">
-                <div className="bg-gray-400 rounded-full p-1">
-                  <ArrowRight className="w-5 h-5 text-white rotate-90" />
-                </div>
-              </div>
-              
-              <div className="md:hidden flex justify-center items-center h-full">
-                <div className="w-1/3 h-0.5 bg-gray-300"></div>
-                <div className="bg-gray-400 rounded-full p-1 mx-2">
-                  <ArrowRight className="w-5 h-5 text-white" />
-                </div>
-                <div className="w-1/3 h-0.5 bg-gray-300"></div>
-              </div>
-            </div>
-            
-            <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg p-6 mb-10 shadow-md">
-              <div className="max-w-3xl mx-auto">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 gap-2">
-                  <div className="flex items-center">
-                    <h3 className="text-xl font-bold">Adaptation Project</h3>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-sm text-gray-500 mr-2">Iterative Development</span>
-                    <RefreshCcw className="h-5 w-5 text-gray-600 animate-rotate-slow" />
-                  </div>
-                </div>
-                
-                <p className="text-gray-600 mb-4">Working iteratively with customers to tailor solutions to their needs</p>
-                
-                <div className="relative mb-2">
-                  <Progress value={progressValue} className="h-3 bg-gray-200" />
-                </div>
-                
-                <div className={cn("grid gap-1 mt-4", isMobile ? "grid-cols-2 gap-y-2" : "grid-cols-4")}>
-                  {sprintPhases.map((phase, index) => <div key={index} className={cn("text-center p-2 rounded transition-all", progressValue >= index / sprintPhases.length * 100 && progressValue < (index + 1) / sprintPhases.length * 100 ? "bg-blue-50 border border-blue-100" : "bg-gray-50")}>
-                      <div className="flex flex-col items-center">
-                        <div className={cn("rounded-full p-1 mb-1", progressValue >= index / sprintPhases.length * 100 ? "bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-500")}>
-                          {phase.icon}
-                        </div>
-                        <span className="text-xs font-medium">{phase.name}</span>
-                      </div>
-                    </div>)}
-                </div>
-                
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-6 gap-2">
-                  <div className="flex items-center">
-                    <div className="bg-green-100 rounded-full p-1 mr-2 shrink-0">
-                      <CheckCircle className="h-4 w-4 text-green-600" />
-                    </div>
-                    <span className="text-sm text-gray-600">Customer feedback integrated at every stage</span>
-                  </div>
-                  <div className="text-sm text-gray-500 flex items-center mt-2 sm:mt-0">
-                    <span className="mr-2">Continuous improvement</span>
-                    <div className="flex space-x-1">
-                      <span className="inline-block w-2 h-2 bg-gray-300 rounded-full animate-pulse"></span>
-                      <span className="inline-block w-2 h-2 bg-gray-400 rounded-full animate-pulse animation-delay-200"></span>
-                      <span className="inline-block w-2 h-2 bg-gray-500 rounded-full animate-pulse animation-delay-400"></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="relative h-16 mb-10">
-              <div className="hidden md:block absolute left-1/2 -translate-x-1/2 w-1 h-full bg-gradient-to-b from-gray-300 to-gray-400"></div>
-              <div className="hidden md:block absolute left-1/2 -translate-x-1/2 top-full -mt-3">
-                <div className="bg-gray-400 rounded-full p-1">
-                  <ArrowRight className="w-5 h-5 text-white rotate-90" />
-                </div>
-              </div>
-              
-              <div className="md:hidden flex justify-center items-center h-full">
-                <div className="w-1/3 h-0.5 bg-gray-300"></div>
-                <div className="bg-gray-400 rounded-full p-1 mx-2">
-                  <ArrowRight className="w-5 h-5 text-white" />
-                </div>
-                <div className="w-1/3 h-0.5 bg-gray-300"></div>
-              </div>
-            </div>
-            
-            <div className="bg-gradient-to-r from-gray-100 via-white to-gray-100 rounded-lg p-8 max-w-xl mx-auto text-center shadow-md hover:shadow-lg transition-all duration-300">
-              <div className="relative inline-block mb-4">
-                <div className="absolute inset-0 bg-black/10 rounded-full animate-pulse-slow"></div>
-                <div className="relative bg-white rounded-full p-4 border border-gray-200 shadow-md">
-                  <Rocket className="h-10 w-10 text-gray-700" />
-                </div>
-              </div>
-              <h3 className="text-xl font-bold mb-2">Hitting the Market</h3>
-              <p className="text-gray-700">Ready to scale, produce, and launch</p>
-              <div className="flex justify-center mt-4 space-x-2">
-                <span className="inline-block w-3 h-3 rounded-full bg-gray-300 animate-pulse"></span>
-                <span className="inline-block w-3 h-3 rounded-full bg-gray-500 animate-pulse animation-delay-200"></span>
-                <span className="inline-block w-3 h-3 rounded-full bg-gray-700 animate-pulse animation-delay-400"></span>
-              </div>
-            </div>
-          </div>
-          
-          <div className="text-center">
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-              <Link to="/tech-details" onClick={() => window.scrollTo(0, 0)} className="inline-flex items-center px-4 sm:px-6 bg-white text-gray-700 rounded-lg border border-gray-200 hover:bg-gray-50 hover:shadow-md transition-all group py-3 w-full sm:w-auto justify-center">
-                Learn More About Our Technology
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              
-              <Button onClick={scrollToContact} className="inline-flex items-center px-4 sm:px-6 py-3 bg-gray-700 hover:bg-gray-800 text-white rounded-lg shadow-md hover:shadow-lg transition-all group w-full sm:w-auto justify-center">
-                Contact Our Experts
-                <MessageSquare className="ml-2 w-4 h-4 group-hover:scale-110 transition-transform" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-    </>;
+      {/* Custom CSS for animations */}
+      <style jsx>{`
+        .animate-fade-in {
+          animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
+    </section>
+  );
 };
+
 export default Features;

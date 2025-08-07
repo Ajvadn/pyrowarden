@@ -21,7 +21,7 @@ const SEO: React.FC<SEOProps> = ({
   description = 'Pyrowarden Technologies: Pioneering smart engineering solutions with textile sensors for sports, safety, and performance monitoring.',
   type = 'website',
   name = 'Pyrowarden Technologies',
-  imageUrl = '/lovable-uploads/48ecf6e2-5a98-4a9d-af6f-ae2265cd4098.png',
+  imageUrl = '/og-image.png',
   publishDate,
   modifiedDate,
   author,
@@ -73,7 +73,7 @@ const SEO: React.FC<SEOProps> = ({
     '@type': 'Organization',
     name: 'Pyrowarden Technologies',
     url: 'https://pyrowarden.com',
-    logo: 'https://pyrowarden.com/lovable-uploads/14ea3fe0-19d6-425c-b95b-4117bc41f3ca.png',
+    logo: 'https://pyrowarden.com/og-image.png',
     description: 'Pioneering smart engineering solutions with textile sensors',
     contactPoint: {
       '@type': 'ContactPoint',
@@ -113,12 +113,10 @@ const SEO: React.FC<SEOProps> = ({
       name: 'Pyrowarden Technologies',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://pyrowarden.com/lovable-uploads/14ea3fe0-19d6-425c-b95b-4117bc41f3ca.png',
-        width: 512,
-        height: 512
-      },
-      url: 'https://pyrowarden.com'
+        url: 'https://pyrowarden.com/og-image.png'
+      }
     },
+    url: currentUrl,
     description: description,
     keywords: enhancedKeywords.join(', '),
     articleSection: category,

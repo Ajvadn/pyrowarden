@@ -51,7 +51,7 @@ const AnimatedCounter = ({
     </span>;
 };
 
-const WhyWrlds = () => {
+const WhyPyrowarden = () => {
   const isMobile = useIsMobile();
   const containerVariants = {
     hidden: {
@@ -79,7 +79,7 @@ const WhyWrlds = () => {
       }
     }
   };
-  return <section id="why-wrlds" className="relative py-16 md:py-24 bg-white overflow-hidden">
+  return <section id="why-pyrowarden" className="relative py-16 md:py-24 bg-white overflow-hidden">
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div className="text-center mb-12 md:mb-16" initial="hidden" whileInView="visible" viewport={{
         once: true,
@@ -196,18 +196,11 @@ const WhyWrlds = () => {
           </motion.div>
           
           <motion.div variants={itemVariants} className="text-center mt-10">
-            <Link 
-              to="/development-process" 
-              onClick={() => window.scrollTo(0, 0)}
-              className="inline-flex items-center px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all group"
-            >
-              Learn more about our structured development process
-              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
+            {/* Learn more link removed */}
           </motion.div>
         </motion.div>
       </div>
     </section>;
 };
 
-export default WhyWrlds;
+export default WhyPyrowarden;

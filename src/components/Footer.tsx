@@ -1,15 +1,33 @@
 
-import { ArrowRight, Linkedin } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
+/**
+ * Footer Component
+ * 
+ * This component displays the website footer with company information,
+ * navigation links, newsletter subscription, and social media links.
+ */
+
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, Linkedin } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 import emailjs from 'emailjs-com';
 
-const Footer = () => {
-  const [email, setEmail] = useState("");
+/**
+ * Footer Component
+ * 
+ * Features:
+ * - Company information and logo
+ * - Navigation links
+ * - Newsletter subscription
+ * - Social media links
+ * - Copyright information
+ */
+const Footer: React.FC = () => {
+  const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
+  // Handle newsletter subscription
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -51,7 +69,7 @@ const Footer = () => {
         variant: "default"
       });
       
-      setEmail("");
+      setEmail('');
     } catch (error) {
       console.error("Error sending subscription:", error);
       
@@ -66,78 +84,129 @@ const Footer = () => {
   };
 
   return (
-    <footer id="contact" className="bg-black text-white pt-16 pb-8 w-full">
+    <footer id="contact" className="bg-black text-white pt-12 sm:pt-16 pb-6 sm:pb-8 w-full">
       <div className="w-full px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-10 pb-10 border-b border-gray-700">
-          <div className="lg:col-span-2">
-            <img 
-              src="/lovable-uploads/7d120ee6-3614-4b75-9c35-716d54490d67.png" 
-              alt="PyroWarden Technologies Logo" 
-              className="h-10 w-auto mb-6 invert" // Added invert to make logo white
-            />
-            <p className="text-gray-300 mb-6">
+        
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 pb-8 sm:pb-10 border-b border-gray-700">
+          
+          {/* Company Information */}
+          <div className="sm:col-span-2">
+            <div className="mb-4 sm:mb-6">
+              <span className="text-2xl sm:text-3xl font-bold text-white">Pyrowarden</span>
+            </div>
+            <p className="text-gray-300 mb-4 sm:mb-6 text-sm sm:text-base">
               PyroWarden Technologies provides professional-grade cybersecurity tools and equipment for ethical hackers, penetration testers, and security researchers worldwide.
             </p>
-            <p className="text-gray-300 mb-6">
-              Hornsgatan 110<br />
-              117 26, Stockholm Sweden
+            <p className="text-gray-300 mb-4 sm:mb-6 text-sm sm:text-base">
+              Malappuram<br />
+              Kerala, India
             </p>
             <div className="flex space-x-4">
               <a 
                 href="https://www.linkedin.com/company/pyrowarden-technologies/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-300 transition-colors hover:bg-gray-700 hover:text-white"
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-300 transition-colors hover:bg-gray-700 hover:text-white"
               >
-                <Linkedin size={20} />
+                <Linkedin size={16} className="sm:w-5 sm:h-5" />
               </a>
             </div>
           </div>
           
+          {/* Company Links */}
           <div>
-            <h3 className="text-lg font-bold mb-4 text-white">Company</h3>
-            <ul className="space-y-3">
-              <li><Link to="/about" className="text-gray-300 hover:text-white transition-colors">About Us</Link></li>
-              <li><Link to="/careers" className="text-gray-300 hover:text-white transition-colors">Careers</Link></li>
-              <li><Link to="/privacy-policy" className="text-gray-300 hover:text-white transition-colors">Privacy Policy</Link></li>
+            <h3 className="text-base sm:text-lg font-bold mb-3 sm:mb-4 text-white">Company</h3>
+            <ul className="space-y-2 sm:space-y-3">
+              <li>
+                <Link to="/about" className="text-gray-300 hover:text-white transition-colors text-sm sm:text-base">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link to="/careers" className="text-gray-300 hover:text-white transition-colors text-sm sm:text-base">
+                  Careers
+                </Link>
+              </li>
+              <li>
+                <Link to="/internships" className="text-gray-300 hover:text-white transition-colors text-sm sm:text-base">
+                  Internships
+                </Link>
+              </li>
             </ul>
           </div>
           
+          {/* Services Links */}
           <div>
-            <h3 className="text-lg font-bold mb-4 text-white">Get in Touch</h3>
-            <form className="space-y-4" onSubmit={handleSubscribe}>
-              <div>
-                <input 
-                  type="email" 
-                  placeholder="Your email" 
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-600 text-white placeholder-gray-400"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  disabled={isSubmitting}
-                />
-              </div>
-              <button 
-                type="submit" 
-                className="w-full px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-600 transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? "Subscribing..." : (
-                  <>
-                    Subscribe
-                    <ArrowRight className="ml-2 w-4 h-4" />
-                  </>
-                )}
-              </button>
-            </form>
+            <h3 className="text-base sm:text-lg font-bold mb-3 sm:mb-4 text-white">Services</h3>
+            <ul className="space-y-2 sm:space-y-3">
+              <li>
+                <a href="#projects" className="text-gray-300 hover:text-white transition-colors text-sm sm:text-base">
+                  Security Tools
+                </a>
+              </li>
+              <li>
+                <a href="#projects" className="text-gray-300 hover:text-white transition-colors text-sm sm:text-base">
+                  Training Programs
+                </a>
+              </li>
+              <li>
+                <a href="#projects" className="text-gray-300 hover:text-white transition-colors text-sm sm:text-base">
+                  Consulting
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
         
-        <div className="pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm mb-4 md:mb-0">
-            © {new Date().getFullYear()} PyroWarden Technologies. All rights reserved.
-          </p>
-          <div className="flex space-x-6">
-            <Link to="/privacy-policy" className="text-sm text-gray-400 hover:text-white transition-colors">Privacy Policy</Link>
+        {/* Newsletter Subscription */}
+        <div className="pt-6 sm:pt-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-center">
+            <div>
+              <h3 className="text-base sm:text-lg font-bold mb-3 sm:mb-4 text-white">Stay Updated</h3>
+              <p className="text-gray-300 text-sm sm:text-base mb-4">
+                Subscribe to our newsletter for the latest updates on cybersecurity tools and training programs.
+              </p>
+            </div>
+            
+            <div>
+              <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  className="flex-1 px-4 py-2 sm:py-3 bg-gray-800 text-white rounded-lg border border-gray-600 focus:outline-none focus:border-gray-400 text-sm sm:text-base"
+                  required
+                />
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="px-6 py-2 sm:py-3 bg-white text-black rounded-lg hover:bg-gray-200 transition-colors font-medium text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                >
+                  {isSubmitting ? "Subscribing..." : (
+                    <>
+                      Subscribe
+                      <ArrowRight className="ml-2 w-4 h-4" />
+                    </>
+                  )}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        
+        {/* Copyright and Legal Links */}
+        <div className="pt-6 sm:pt-8 border-t border-gray-700">
+          <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+            <p className="text-gray-400 text-sm">
+              © 2024 PyroWarden Technologies. All rights reserved.
+            </p>
+            <div className="flex space-x-6">
+              <Link to="/privacy-policy" className="text-gray-400 hover:text-white transition-colors text-sm">
+                Privacy Policy
+              </Link>
+            </div>
           </div>
         </div>
       </div>
