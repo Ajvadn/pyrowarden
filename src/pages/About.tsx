@@ -44,8 +44,8 @@ const About: React.FC = () => {
     },
     {
       name: "Afeef M",
-      role: "Full Stack Developer",
-      bio: "Expert in Web Development .frontend and backend development",
+      role: "Frontend developer React",
+      bio: "Expert in Web Development",
       image: "/team-images/afeef-m.jpeg"
     },
     {
@@ -55,11 +55,11 @@ const About: React.FC = () => {
       image: "/team-images/jithin-pr.jpeg"
     },
     {
-      name: "Fawas",
+      name: "Mohammed Fawas cc",
       image: "/team-images/fawas.jpeg"
     },
     {
-      name: "Irfhan",
+      name: "Irfan",
       image: "/team-images/irfhan.jpeg"
     },
     {
@@ -68,7 +68,7 @@ const About: React.FC = () => {
     },
     {
       name: "Salman P",
-      image: "/placeholder.svg"
+      image: "/team-images/salman-p.jpg"
     }
   ];
 
