@@ -1,39 +1,20 @@
-/**
- * Navigation Bar Component
- * 
- * This component provides the main navigation for the website.
- * It includes responsive design for mobile, tablet, and desktop.
- */
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ShoppingCart, Heart, User } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { 
-  NavigationMenu, 
-  NavigationMenuContent, 
-  NavigationMenuItem, 
-  NavigationMenuLink, 
-  NavigationMenuList, 
-  navigationMenuTriggerStyle 
-} from '@/components/ui/navigation-menu';
+import { Badge } from '@/components/ui/badge';
+import { useAuth } from '@/contexts/AuthContext';
+import { useCart } from '@/hooks/useCart';
+import { useWishlist } from '@/hooks/useWishlist';
 
-/**
- * Navbar Component
- * 
- * Features:
- * - Responsive design (mobile, tablet, desktop)
- * - Scroll-based background color change
- * - Mobile hamburger menu
- * - Smooth animations
- */
 const Navbar: React.FC = () => {
-  // State for scroll detection and mobile menu
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, isAdmin } = useAuth();
+  const { totalItems } = useCart();
+  const { wishlistItems } = useWishlist();
 
-  // Handle scroll events to change navbar background
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -43,12 +24,10 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Toggle mobile menu
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // Scroll to contact section and close mobile menu
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact');
     if (contactSection) {
@@ -57,7 +36,6 @@ const Navbar: React.FC = () => {
     setIsMenuOpen(false);
   };
 
-  // Close mobile menu when navigating
   const handleNavigation = () => {
     setIsMenuOpen(false);
     window.scrollTo(0, 0);
@@ -74,8 +52,6 @@ const Navbar: React.FC = () => {
     >
       <div className="w-full px-4 sm:px-6 lg:px-8 mx-auto">
         <div className="flex items-center justify-between h-16 sm:h-20">
-          
-          {/* Logo/Brand */}
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center">
               <span className={cn(
@@ -87,206 +63,66 @@ const Navbar: React.FC = () => {
             </Link>
           </div>
           
-          {/* Desktop Navigation */}
-          <div className="hidden lg:block">
-            <NavigationMenu className={cn(isScrolled ? "" : "text-white")}>
-              <NavigationMenuList className="space-x-2">
-                <NavigationMenuItem>
-                  <Link to="/">
-                    <NavigationMenuLink className={cn(
-                      navigationMenuTriggerStyle(),
-                      "text-sm sm:text-base",
-                      isScrolled ? "text-gray-700 hover:text-gray-900" : "text-gray-100 hover:text-white bg-transparent hover:bg-gray-800"
-                    )}>
-                      Home
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-                
-                <NavigationMenuItem>
-                  <Link to="/about">
-                    <NavigationMenuLink className={cn(
-                      navigationMenuTriggerStyle(),
-                      "text-sm sm:text-base",
-                      isScrolled ? "text-gray-700 hover:text-gray-900" : "text-gray-100 hover:text-white bg-transparent hover:bg-gray-800"
-                    )}>
-                      About Us
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-                
-                <NavigationMenuItem>
-                  <Link to="/internships">
-                    <NavigationMenuLink className={cn(
-                      navigationMenuTriggerStyle(),
-                      "text-sm sm:text-base",
-                      isScrolled ? "text-gray-700 hover:text-gray-900" : "text-gray-100 hover:text-white bg-transparent hover:bg-gray-800"
-                    )}>
-                      Internships
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-                
-                <NavigationMenuItem>
-                  <Link to="/careers">
-                    <NavigationMenuLink className={cn(
-                      navigationMenuTriggerStyle(),
-                      "text-sm sm:text-base",
-                      isScrolled ? "text-gray-700 hover:text-gray-900" : "text-gray-100 hover:text-white bg-transparent hover:bg-gray-800"
-                    )}>
-                      Careers
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-                
-                <NavigationMenuItem>
-                  <button 
-                    onClick={scrollToContact}
-                    className={cn(
-                      "px-4 py-2 rounded-md transition-colors text-sm sm:text-base",
-                      isScrolled ? "bg-gray-200 text-gray-700 hover:bg-gray-300" : "bg-gray-700 text-white hover:bg-gray-600"
+          <div className="hidden lg:flex items-center space-x-6">
+            <Link to="/" className={cn("transition-colors", isScrolled ? "text-gray-700 hover:text-gray-900" : "text-gray-100 hover:text-white")}>Home</Link>
+            <Link to="/products" className={cn("transition-colors", isScrolled ? "text-gray-700 hover:text-gray-900" : "text-gray-100 hover:text-white")}>Products</Link>
+            <Link to="/about" className={cn("transition-colors", isScrolled ? "text-gray-700 hover:text-gray-900" : "text-gray-100 hover:text-white")}>About</Link>
+            <Link to="/careers" className={cn("transition-colors", isScrolled ? "text-gray-700 hover:text-gray-900" : "text-gray-100 hover:text-white")}>Careers</Link>
+            
+            <div className="flex items-center space-x-2">
+              {user ? (
+                <>
+                  <Link to="/cart" className="relative p-2">
+                    <ShoppingCart className={cn("h-5 w-5", isScrolled ? "text-gray-700" : "text-white")} />
+                    {totalItems > 0 && (
+                      <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs">
+                        {totalItems}
+                      </Badge>
                     )}
-                  >
-                    Contact Us
-                  </button>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
-          </div>
-          
-          {/* Tablet Navigation */}
-          <div className="hidden md:block lg:hidden">
-            <NavigationMenu className={cn(isScrolled ? "" : "text-white")}>
-              <NavigationMenuList className="space-x-1">
-                <NavigationMenuItem>
-                  <Link to="/">
-                    <NavigationMenuLink className={cn(
-                      navigationMenuTriggerStyle(),
-                      "text-sm",
-                      isScrolled ? "text-gray-700 hover:text-gray-900" : "text-gray-100 hover:text-white bg-transparent hover:bg-gray-800"
-                    )}>
-                      Home
-                    </NavigationMenuLink>
                   </Link>
-                </NavigationMenuItem>
-                
-                <NavigationMenuItem>
-                  <Link to="/about">
-                    <NavigationMenuLink className={cn(
-                      navigationMenuTriggerStyle(),
-                      "text-sm",
-                      isScrolled ? "text-gray-700 hover:text-gray-900" : "text-gray-100 hover:text-white bg-transparent hover:bg-gray-800"
-                    )}>
-                      About
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-                
-                <NavigationMenuItem>
-                  <Link to="/internships">
-                    <NavigationMenuLink className={cn(
-                      navigationMenuTriggerStyle(),
-                      "text-sm",
-                      isScrolled ? "text-gray-700 hover:text-gray-900" : "text-gray-100 hover:text-white bg-transparent hover:bg-gray-800"
-                    )}>
-                      Internships
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-                
-                <NavigationMenuItem>
-                  <button 
-                    onClick={scrollToContact}
-                    className={cn(
-                      "px-3 py-2 rounded-md transition-colors text-sm",
-                      isScrolled ? "bg-gray-200 text-gray-700 hover:bg-gray-300" : "bg-gray-700 text-white hover:bg-gray-600"
+                  <Link to="/wishlist" className="relative p-2">
+                    <Heart className={cn("h-5 w-5", isScrolled ? "text-gray-700" : "text-white")} />
+                    {wishlistItems.length > 0 && (
+                      <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs">
+                        {wishlistItems.length}
+                      </Badge>
                     )}
-                  >
-                    Contact
-                  </button>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
-          </div>
-          
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <button 
-              onClick={toggleMenu} 
-              className={cn(
-                "p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2",
-                isScrolled ? "text-gray-700 focus:ring-gray-500" : "text-white focus:ring-white"
+                  </Link>
+                  <Link to="/dashboard" className="p-2">
+                    <User className={cn("h-5 w-5", isScrolled ? "text-gray-700" : "text-white")} />
+                  </Link>
+                </>
+              ) : (
+                <Link to="/auth" className={cn("px-4 py-2 rounded-md transition-colors", isScrolled ? "bg-gray-200 text-gray-700 hover:bg-gray-300" : "bg-gray-700 text-white hover:bg-gray-600")}>
+                  Sign In
+                </Link>
               )}
-              aria-label="Toggle menu"
-            >
+            </div>
+          </div>
+          
+          <div className="lg:hidden">
+            <button onClick={toggleMenu} className={cn("p-2 rounded-md", isScrolled ? "text-gray-700" : "text-white")}>
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Navigation Menu */}
-      <div className={cn(
-        "md:hidden transition-all duration-300 overflow-hidden w-full",
-        isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-      )}>
-        <div className={cn(
-          "px-4 pt-2 pb-4 space-y-2 shadow-lg",
-          isScrolled ? "bg-white" : "bg-black/90"
-        )}>
-          <Link 
-            to="/" 
-            className={cn(
-              "block px-4 py-3 rounded-lg text-base font-medium transition-colors",
-              isScrolled ? "text-gray-700 hover:bg-gray-50" : "text-gray-200 hover:bg-gray-900"
-            )}
-            onClick={handleNavigation}
-          >
-            Home
-          </Link>
-          
-          <Link 
-            to="/about" 
-            className={cn(
-              "block px-4 py-3 rounded-lg text-base font-medium transition-colors",
-              isScrolled ? "text-gray-700 hover:bg-gray-50" : "text-gray-200 hover:bg-gray-900"
-            )}
-            onClick={handleNavigation}
-          >
-            About Us
-          </Link>
-          
-          <Link 
-            to="/internships" 
-            className={cn(
-              "block px-4 py-3 rounded-lg text-base font-medium transition-colors",
-              isScrolled ? "text-gray-700 hover:bg-gray-50" : "text-gray-200 hover:bg-gray-900"
-            )}
-            onClick={handleNavigation}
-          >
-            Internships
-          </Link>
-          
-          <Link 
-            to="/careers" 
-            className={cn(
-              "block px-4 py-3 rounded-lg text-base font-medium transition-colors",
-              isScrolled ? "text-gray-700 hover:bg-gray-50" : "text-gray-200 hover:bg-gray-900"
-            )}
-            onClick={handleNavigation}
-          >
-            Careers
-          </Link>
-          
-          <button 
-            onClick={scrollToContact}
-            className={cn(
-              "block w-full text-left px-4 py-3 rounded-lg text-base font-medium transition-colors",
-              isScrolled ? "text-gray-700 bg-gray-200 hover:bg-gray-300" : "text-white bg-gray-700 hover:bg-gray-600"
-            )}
-          >
-            Contact Us
-          </button>
+      <div className={cn("lg:hidden transition-all duration-300 overflow-hidden w-full", isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0")}>
+        <div className={cn("px-4 pt-2 pb-4 space-y-2 shadow-lg", isScrolled ? "bg-white" : "bg-black/90")}>
+          <Link to="/" className={cn("block px-4 py-3 rounded-lg transition-colors", isScrolled ? "text-gray-700 hover:bg-gray-50" : "text-gray-200 hover:bg-gray-900")} onClick={handleNavigation}>Home</Link>
+          <Link to="/products" className={cn("block px-4 py-3 rounded-lg transition-colors", isScrolled ? "text-gray-700 hover:bg-gray-50" : "text-gray-200 hover:bg-gray-900")} onClick={handleNavigation}>Products</Link>
+          <Link to="/about" className={cn("block px-4 py-3 rounded-lg transition-colors", isScrolled ? "text-gray-700 hover:bg-gray-50" : "text-gray-200 hover:bg-gray-900")} onClick={handleNavigation}>About</Link>
+          <Link to="/careers" className={cn("block px-4 py-3 rounded-lg transition-colors", isScrolled ? "text-gray-700 hover:bg-gray-50" : "text-gray-200 hover:bg-gray-900")} onClick={handleNavigation}>Careers</Link>
+          {user ? (
+            <>
+              <Link to="/dashboard" className={cn("block px-4 py-3 rounded-lg transition-colors", isScrolled ? "text-gray-700 hover:bg-gray-50" : "text-gray-200 hover:bg-gray-900")} onClick={handleNavigation}>Dashboard</Link>
+              <Link to="/cart" className={cn("block px-4 py-3 rounded-lg transition-colors", isScrolled ? "text-gray-700 hover:bg-gray-50" : "text-gray-200 hover:bg-gray-900")} onClick={handleNavigation}>Cart ({totalItems})</Link>
+              <Link to="/wishlist" className={cn("block px-4 py-3 rounded-lg transition-colors", isScrolled ? "text-gray-700 hover:bg-gray-50" : "text-gray-200 hover:bg-gray-900")} onClick={handleNavigation}>Wishlist ({wishlistItems.length})</Link>
+            </>
+          ) : (
+            <Link to="/auth" className={cn("block px-4 py-3 rounded-lg transition-colors", isScrolled ? "text-gray-700 hover:bg-gray-50" : "text-gray-200 hover:bg-gray-900")} onClick={handleNavigation}>Sign In</Link>
+          )}
         </div>
       </div>
     </motion.nav>
