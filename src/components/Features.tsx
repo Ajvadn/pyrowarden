@@ -225,7 +225,7 @@ const Features = () => {
       </div>
 
       {/* Custom CSS for animations */}
-      <style jsx>{`
+      <style>{`
         .animate-fade-in {
           animation: fadeInUp 0.6s ease-out forwards;
         }

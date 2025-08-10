@@ -1,9 +1,31 @@
 
 import React from 'react';
-import { ContentSection } from '@/data/blogPosts';
 import { DollarSign, Users, TrendingUp, Shield, Zap, Settings, Database } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+
+// Define ContentSection interface locally
+interface ContentSection {
+  type: string;
+  content?: string;
+  items?: string[];
+  statsData?: Array<{
+    icon: string;
+    value: string;
+    label: string;
+  }>;
+  chartData?: {
+    title: string;
+    data: Array<{
+      name: string;
+      value: number;
+    }>;
+  };
+  tableData?: {
+    headers: string[];
+    rows: string[][];
+  };
+}
 
 interface EnhancedBlogContentProps {
   content: ContentSection[];
