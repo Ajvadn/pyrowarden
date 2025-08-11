@@ -36,14 +36,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          // Check if user is admin
+          // Check if user is admin using the user_roles system
           setTimeout(async () => {
-            const { data: profile } = await supabase
-              .from('profiles')
-              .select('role')
-              .eq('user_id', session.user.id)
-              .single();
-            setIsAdmin(profile?.role === 'admin');
+            const { data: hasAdminRole } = await supabase
+              .rpc('has_role', { 
+                _user_id: session.user.id, 
+                _role: 'admin' 
+              });
+            setIsAdmin(hasAdminRole || false);
           }, 0);
         } else {
           setIsAdmin(false);
