@@ -2,7 +2,6 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useScrollHijack } from "@/hooks/useScrollHijack";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Index from "./pages/Index";
 import About from "./pages/About";
@@ -27,11 +26,6 @@ import Dashboard from "./pages/Dashboard";
 
 const queryClient = new QueryClient();
 
-function ScrollHijackWrapper({ children }: { children: React.ReactNode }) {
-  useScrollHijack();
-  return <>{children}</>;
-}
-
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
@@ -39,30 +33,28 @@ function App() {
         <Toaster />
         <BrowserRouter>
           <AuthProvider>
-            <ScrollHijackWrapper>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/careers" element={<Careers />} />
-                <Route path="/internships" element={<Internships />} />
-                <Route path="/process" element={<DevelopmentProcess />} />
-                <Route path="/tech-details" element={<TechDetails />} />
-                <Route path="/firecat" element={<FireCatProject />} />
-                <Route path="/workwear" element={<WorkwearProject />} />
-                <Route path="/hockey" element={<HockeyProject />} />
-                <Route path="/pet" element={<PetProject />} />
-                <Route path="/sport-retail" element={<SportRetailProject />} />
-                <Route path="/privacy" element={<PrivacyPolicy />} />
-                <Route path="/auth" element={<Auth />} />
-                <Route path="/products" element={<Products />} />
-                <Route path="/product/:id" element={<ProductDetail />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/wishlist" element={<Wishlist />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </ScrollHijackWrapper>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/careers" element={<Careers />} />
+              <Route path="/internships" element={<Internships />} />
+              <Route path="/process" element={<DevelopmentProcess />} />
+              <Route path="/tech-details" element={<TechDetails />} />
+              <Route path="/firecat" element={<FireCatProject />} />
+              <Route path="/workwear" element={<WorkwearProject />} />
+              <Route path="/hockey" element={<HockeyProject />} />
+              <Route path="/pet" element={<PetProject />} />
+              <Route path="/sport-retail" element={<SportRetailProject />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/product/:id" element={<ProductDetail />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/wishlist" element={<Wishlist />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
           </AuthProvider>
         </BrowserRouter>
       </TooltipProvider>
