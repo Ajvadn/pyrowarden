@@ -28,7 +28,7 @@ const About: React.FC = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Team member data
+  // Team member data - arranged for 4 per row with Mohammed Fawas CC in second row
   const teamMembers = [
     {
       name: "Ajvad N",
@@ -197,8 +197,8 @@ const About: React.FC = () => {
                   and penetration testing to deliver comprehensive security solutions.
                 </p>
                 
-                {/* Team Grid */}
-                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-3">
+                {/* Team Grid - 4 people per row */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
                   {teamMembers.map((member, i) => (
                     <Card key={i} className="bg-white border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
                       <CardContent className="p-2 sm:p-3 flex flex-col items-center text-center">
