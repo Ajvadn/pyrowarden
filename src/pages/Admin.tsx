@@ -165,9 +165,11 @@ const Admin = () => {
               <CardDescription>Manage user accounts and permissions</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button className="w-full" variant="outline">
-                Manage Users
-              </Button>
+              <Link to="/admin/users">
+                <Button className="w-full" variant="outline">
+                  Manage Users
+                </Button>
+              </Link>
             </CardContent>
           </Card>
 
@@ -180,9 +182,11 @@ const Admin = () => {
               <CardDescription>Add, edit, or remove products</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button className="w-full" variant="outline">
-                Manage Products
-              </Button>
+              <Link to="/admin/products">
+                <Button className="w-full" variant="outline">
+                  Manage Products
+                </Button>
+              </Link>
             </CardContent>
           </Card>
 
@@ -195,9 +199,11 @@ const Admin = () => {
               <CardDescription>View and process customer orders</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button className="w-full" variant="outline">
-                Manage Orders
-              </Button>
+              <Link to="/admin/orders">
+                <Button className="w-full" variant="outline">
+                  Manage Orders
+                </Button>
+              </Link>
             </CardContent>
           </Card>
         </div>

@@ -25,6 +25,9 @@ import Wishlist from "./pages/Wishlist";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";
+import ManageUsers from "./pages/admin/ManageUsers";
+import ManageProducts from "./pages/admin/ManageProducts";
+import ManageOrders from "./pages/admin/ManageOrders";
 
 const queryClient = new QueryClient();
 
@@ -57,6 +60,9 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/admin" element={<Admin />} />
+              <Route path="/admin/users" element={<ManageUsers />} />
+              <Route path="/admin/products" element={<ManageProducts />} />
+              <Route path="/admin/orders" element={<ManageOrders />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </AuthProvider>
