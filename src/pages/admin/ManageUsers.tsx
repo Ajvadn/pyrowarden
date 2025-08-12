@@ -21,7 +21,7 @@ interface UserProfile {
   email: string;
   full_name?: string;
   phone?: string;
-  role: string;
+  role: 'user' | 'admin';
   created_at: string;
   updated_at: string;
 }
@@ -84,7 +84,7 @@ const ManageUsers = () => {
       .update({
         full_name: formData.full_name,
         phone: formData.phone,
-        role: formData.role
+        role: formData.role as UserProfile['role']
       })
       .eq('id', editingUser.id);
 

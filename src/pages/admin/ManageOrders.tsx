@@ -18,7 +18,7 @@ import SEO from '@/components/SEO';
 interface Order {
   id: string;
   order_number: string;
-  status: string;
+  status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
   total_amount: number;
   shipping_address: any;
   billing_address?: any;
@@ -30,7 +30,7 @@ interface Order {
   profiles?: {
     email: string;
     full_name?: string;
-  };
+  } | null;
 }
 
 interface OrderItem {
@@ -83,7 +83,10 @@ const ManageOrders = () => {
         variant: "destructive"
       });
     } else {
-      setOrders(data || []);
+      setOrders((data as any[])?.map(order => ({
+        ...order,
+        profiles: order.profiles && !Array.isArray(order.profiles) ? order.profiles : null
+      })) || []);
     }
     setLoading(false);
   };
@@ -130,7 +133,7 @@ const ManageOrders = () => {
 
     const { error } = await supabase
       .from('orders')
-      .update({ status: editStatus })
+      .update({ status: editStatus as Order['status'] })
       .eq('id', selectedOrder.id);
 
     if (error) {

@@ -28,7 +28,7 @@ interface Product {
   images: string[];
   category?: string;
   tags: string[];
-  status: string;
+  status: 'active' | 'inactive' | 'out_of_stock';
   featured: boolean;
   created_at: string;
   updated_at: string;
@@ -101,7 +101,7 @@ const ManageProducts = () => {
 
     const { error } = await supabase
       .from('products')
-      .insert([productData]);
+      .insert([{...productData, status: productData.status as Product['status']}]);
 
     if (error) {
       toast({
@@ -139,7 +139,7 @@ const ManageProducts = () => {
 
     const { error } = await supabase
       .from('products')
-      .update(productData)
+      .update({...productData, status: productData.status as Product['status']})
       .eq('id', editingProduct.id);
 
     if (error) {
