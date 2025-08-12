@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, ShoppingCart, Heart, User } from 'lucide-react';
+import { Menu, X, ShoppingCart, Heart, User, LogOut } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
@@ -11,7 +11,7 @@ import { useWishlist } from '@/hooks/useWishlist';
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user, isAdmin } = useAuth();
+  const { user, isAdmin, signOut } = useAuth();
   const { totalItems } = useCart();
   const { wishlistItems } = useWishlist();
 
@@ -91,6 +91,9 @@ const Navbar: React.FC = () => {
                   <Link to="/dashboard" className="p-2">
                     <User className={cn("h-5 w-5", isScrolled ? "text-gray-700" : "text-white")} />
                   </Link>
+                  <button onClick={signOut} className="p-2" title="Logout">
+                    <LogOut className={cn("h-5 w-5", isScrolled ? "text-gray-700" : "text-white")} />
+                  </button>
                 </>
               ) : (
                 <Link to="/auth" className={cn("px-4 py-2 rounded-md transition-colors", isScrolled ? "bg-gray-200 text-gray-700 hover:bg-gray-300" : "bg-gray-700 text-white hover:bg-gray-600")}>
@@ -119,6 +122,7 @@ const Navbar: React.FC = () => {
               <Link to="/dashboard" className={cn("block px-4 py-3 rounded-lg transition-colors", isScrolled ? "text-gray-700 hover:bg-gray-50" : "text-gray-200 hover:bg-gray-900")} onClick={handleNavigation}>Dashboard</Link>
               <Link to="/cart" className={cn("block px-4 py-3 rounded-lg transition-colors", isScrolled ? "text-gray-700 hover:bg-gray-50" : "text-gray-200 hover:bg-gray-900")} onClick={handleNavigation}>Cart ({totalItems})</Link>
               <Link to="/wishlist" className={cn("block px-4 py-3 rounded-lg transition-colors", isScrolled ? "text-gray-700 hover:bg-gray-50" : "text-gray-200 hover:bg-gray-900")} onClick={handleNavigation}>Wishlist ({wishlistItems.length})</Link>
+              <button onClick={() => { signOut(); handleNavigation(); }} className={cn("block w-full text-left px-4 py-3 rounded-lg transition-colors", isScrolled ? "text-gray-700 hover:bg-gray-50" : "text-gray-200 hover:bg-gray-900")}>Logout</button>
             </>
           ) : (
             <Link to="/auth" className={cn("block px-4 py-3 rounded-lg transition-colors", isScrolled ? "text-gray-700 hover:bg-gray-50" : "text-gray-200 hover:bg-gray-900")} onClick={handleNavigation}>Sign In</Link>
