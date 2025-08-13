@@ -119,7 +119,7 @@ const ContactForm = () => {
       
       // More detailed error logging
       if (error && typeof error === 'object' && 'text' in error) {
-        console.error('Error details:', (error as any).text);
+        console.error('Error details:', (error as { text: string }).text);
       }
       
       toast({

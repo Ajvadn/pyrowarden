@@ -1,0 +1,21 @@
+{
+  "name": "Pyrowarden - Professional Cybersecurity Tools & Training",
+  "short_name": "Pyrowarden",
+  "description": "Get hands-on experience through our intensive 1-month tech internships and access professional cybersecurity tools for ethical hackers and security professionals.",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#1e40af",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/"
+}

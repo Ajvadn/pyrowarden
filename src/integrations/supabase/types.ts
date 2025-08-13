@@ -270,6 +270,150 @@ export type Database = {
           },
         ]
       }
+      internships: {
+        Row: {
+          id: string
+          title: string
+          description: string
+          requirements: string[]
+          responsibilities: string[]
+          duration: string
+          location: string
+          type: string
+          department: string
+          salary_range: string | null
+          benefits: string[]
+          status: Database["public"]["Enums"]["internship_status"]
+          max_applications: number | null
+          current_applications: number
+          start_date: string | null
+          end_date: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          title: string
+          description: string
+          requirements?: string[]
+          responsibilities?: string[]
+          duration: string
+          location: string
+          type: string
+          department: string
+          salary_range?: string | null
+          benefits?: string[]
+          status?: Database["public"]["Enums"]["internship_status"]
+          max_applications?: number | null
+          current_applications?: number
+          start_date?: string | null
+          end_date?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          title?: string
+          description?: string
+          requirements?: string[]
+          responsibilities?: string[]
+          duration?: string
+          location?: string
+          type?: string
+          department?: string
+          salary_range?: string | null
+          benefits?: string[]
+          status?: Database["public"]["Enums"]["internship_status"]
+          max_applications?: number | null
+          current_applications?: number
+          start_date?: string | null
+          end_date?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      internship_applications: {
+        Row: {
+          id: string
+          internship_id: string
+          user_id: string
+          status: string
+          cover_letter: string | null
+          resume_url: string | null
+          portfolio_url: string | null
+          github_url: string | null
+          linkedin_url: string | null
+          expected_graduation_date: string | null
+          current_education: string | null
+          relevant_experience: string | null
+          skills: string[]
+          availability_start: string | null
+          availability_end: string | null
+          notes: string | null
+          admin_notes: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          internship_id: string
+          user_id: string
+          status?: string
+          cover_letter?: string | null
+          resume_url?: string | null
+          portfolio_url?: string | null
+          github_url?: string | null
+          linkedin_url?: string | null
+          expected_graduation_date?: string | null
+          current_education?: string | null
+          relevant_experience?: string | null
+          skills?: string[]
+          availability_start?: string | null
+          availability_end?: string | null
+          notes?: string | null
+          admin_notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          internship_id?: string
+          user_id?: string
+          status?: string
+          cover_letter?: string | null
+          resume_url?: string | null
+          portfolio_url?: string | null
+          github_url?: string | null
+          linkedin_url?: string | null
+          expected_graduation_date?: string | null
+          current_education?: string | null
+          relevant_experience?: string | null
+          skills?: string[]
+          availability_start?: string | null
+          availability_end?: string | null
+          notes?: string | null
+          admin_notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "internship_applications_internship_id_fkey"
+            columns: ["internship_id"]
+            isOneToOne: false
+            referencedRelation: "internships"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "internship_applications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -305,6 +449,7 @@ export type Database = {
         | "cancelled"
       product_status: "active" | "inactive" | "out_of_stock"
       user_role: "admin" | "user"
+      internship_status: "open" | "closed" | "in_progress" | "completed"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -442,6 +587,7 @@ export const Constants = {
       ],
       product_status: ["active", "inactive", "out_of_stock"],
       user_role: ["admin", "user"],
+      internship_status: ["open", "closed", "in_progress", "completed"],
     },
   },
 } as const

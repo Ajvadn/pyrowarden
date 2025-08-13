@@ -1,13 +1,64 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Clock, Users, Award, CheckCircle, Calendar, MapPin, DollarSign, Star, Download, Send } from 'lucide-react';
+import { Clock, Users, Award, CheckCircle, Calendar, MapPin, DollarSign, Star, Download, Send, Building, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
+
+interface Internship {
+  id: string;
+  title: string;
+  description: string;
+  requirements: string[];
+  responsibilities: string[];
+  duration: string;
+  location: string;
+  type: string;
+  department: string;
+  salary_range: string | null;
+  benefits: string[];
+  status: 'open' | 'closed' | 'in_progress' | 'completed';
+  max_applications: number | null;
+  current_applications: number;
+  start_date: string | null;
+  end_date: string | null;
+  created_at: string;
+  updated_at: string;
+}
 
 const Internships = () => {
+  const { user } = useAuth();
+  const [internships, setInternships] = useState<Internship[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchInternships();
+  }, []);
+
+  const fetchInternships = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('internships')
+        .select('*')
+        .eq('status', 'open')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setInternships(data || []);
+    } catch (error) {
+      console.error('Error fetching internships:', error);
+      toast.error('Failed to fetch internships');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const internshipPrograms = [
     {
       title: "Cybersecurity Specialist",
@@ -112,10 +163,10 @@ const Internships = () => {
     }
   ];
 
-  const scrollToApplication = () => {
-    const applicationElement = document.getElementById('application-form');
-    if (applicationElement) {
-      applicationElement.scrollIntoView({ behavior: 'smooth' });
+  const scrollToInternships = () => {
+    const internshipsSection = document.querySelector('section:nth-of-type(3)');
+    if (internshipsSection) {
+      internshipsSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -143,8 +194,8 @@ const Internships = () => {
               Intensive 1-month internship programs in cutting-edge technologies. Get hands-on experience, industry mentorship, and recognized certificates.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button onClick={scrollToApplication} size="lg" className="bg-white text-primary hover:bg-white/90">
-                Apply Now <Send className="ml-2 w-5 h-5" />
+              <Button onClick={scrollToInternships} size="lg" className="bg-white text-primary hover:bg-white/90">
+                Browse Internships <Send className="ml-2 w-5 h-5" />
               </Button>
               <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-primary">
                 Download Brochure <Download className="ml-2 w-5 h-5" />
@@ -187,176 +238,150 @@ const Internships = () => {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Our Internship Programs</h2>
+            <h2 className="text-3xl font-bold mb-4">Available Internship Positions</h2>
             <p className="text-lg text-muted-foreground">
-              Choose from our comprehensive range of technology specializations
+              {loading ? 'Loading internships...' : `We have ${internships.length} open internship positions`}
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-            {internshipPrograms.map((program, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <Card className="h-full hover:shadow-lg transition-shadow duration-300">
-                  <CardContent className="p-6">
-                    <div className={`w-16 h-16 bg-gradient-to-r ${program.color} rounded-lg flex items-center justify-center text-white text-2xl mb-4`}>
-                      {program.icon}
-                    </div>
-                    
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-xl font-bold">{program.title}</h3>
-                      <Badge variant="secondary">{program.duration}</Badge>
-                    </div>
-                    
-                    <p className="text-muted-foreground mb-4">{program.description}</p>
-                    
-                    <div className="space-y-3 mb-4">
-                      <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4 text-muted-foreground" />
-                        <span className="text-sm">{program.type}</span>
+          {loading ? (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+              <p className="mt-4 text-muted-foreground">Loading internships...</p>
+            </div>
+          ) : internships.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">No open internship positions at the moment. Check back later!</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+              {internships.map((internship, index) => (
+                <motion.div
+                  key={internship.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                >
+                  <Card className="h-full hover:shadow-lg transition-shadow duration-300">
+                    <CardHeader>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <CardTitle className="text-xl">{internship.title}</CardTitle>
+                          <CardDescription>{internship.department}</CardDescription>
+                        </div>
+                        <Badge variant="default">Open</Badge>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Users className="w-4 h-4 text-muted-foreground" />
-                        <span className="text-sm">{program.mentors}</span>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <p className="text-muted-foreground line-clamp-3">{internship.description}</p>
+                      
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2 text-sm">
+                          <MapPin className="w-4 h-4 text-muted-foreground" />
+                          {internship.location} • {internship.type}
+                        </div>
+                        <div className="flex items-center gap-2 text-sm">
+                          <Calendar className="w-4 h-4 text-muted-foreground" />
+                          {internship.duration}
+                        </div>
+                        {internship.salary_range && (
+                          <div className="flex items-center gap-2 text-sm">
+                            <DollarSign className="w-4 h-4 text-muted-foreground" />
+                            {internship.salary_range}
+                          </div>
+                        )}
+                        <div className="flex items-center gap-2 text-sm">
+                          <Users className="w-4 h-4 text-muted-foreground" />
+                          {internship.current_applications} applications
+                          {internship.max_applications && ` / ${internship.max_applications} max`}
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <DollarSign className="w-4 h-4 text-muted-foreground" />
-                        <span className="text-sm font-semibold text-primary">{program.price}</span>
-                      </div>
-                    </div>
-                    
-                    <div className="mb-4">
-                      <h4 className="font-semibold mb-2">Key Skills:</h4>
-                      <div className="flex flex-wrap gap-1">
-                        {program.skills.slice(0, 4).map((skill, skillIndex) => (
-                          <Badge key={skillIndex} variant="outline" className="text-xs">
-                            {skill}
-                          </Badge>
-                        ))}
-                        {program.skills.length > 4 && (
-                          <Badge variant="outline" className="text-xs">
-                            +{program.skills.length - 4} more
-                          </Badge>
+                      
+                      {internship.requirements.length > 0 && (
+                        <div>
+                          <h4 className="font-semibold mb-2 text-sm">Requirements:</h4>
+                          <div className="flex flex-wrap gap-1">
+                            {internship.requirements.slice(0, 3).map((req, reqIndex) => (
+                              <Badge key={reqIndex} variant="outline" className="text-xs">
+                                {req}
+                              </Badge>
+                            ))}
+                            {internship.requirements.length > 3 && (
+                              <Badge variant="outline" className="text-xs">
+                                +{internship.requirements.length - 3} more
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                      
+                      {internship.benefits.length > 0 && (
+                        <div>
+                          <h4 className="font-semibold mb-2 text-sm">Benefits:</h4>
+                          <div className="flex flex-wrap gap-1">
+                            {internship.benefits.slice(0, 2).map((benefit, benefitIndex) => (
+                              <Badge key={benefitIndex} variant="secondary" className="text-xs">
+                                {benefit}
+                              </Badge>
+                            ))}
+                            {internship.benefits.length > 2 && (
+                              <Badge variant="secondary" className="text-xs">
+                                +{internship.benefits.length - 2} more
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                      
+                      <div className="pt-4">
+                        {user ? (
+                          <Link to={`/internship/${internship.id}/apply`}>
+                            <Button className="w-full">
+                              Apply Now <ArrowRight className="ml-2 w-4 h-4" />
+                            </Button>
+                          </Link>
+                        ) : (
+                          <Link to="/auth">
+                            <Button className="w-full">
+                              Sign In to Apply <ArrowRight className="ml-2 w-4 h-4" />
+                            </Button>
+                          </Link>
                         )}
                       </div>
-                    </div>
-                    
-                    <div className="mb-6">
-                      <h4 className="font-semibold mb-2">Projects:</h4>
-                      <ul className="text-sm text-muted-foreground space-y-1">
-                        {program.projects.map((project, projectIndex) => (
-                          <li key={projectIndex} className="flex items-center gap-2">
-                            <CheckCircle className="w-3 h-3 text-primary" />
-                            {project}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    
-                    <Button onClick={scrollToApplication} className="w-full">
-                      Apply for {program.title}
-                    </Button>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Application Form Section */}
+      {/* Call to Action Section */}
       <section id="application-form" className="py-16 bg-muted/30">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Apply for Internship</h2>
-            <p className="text-lg text-muted-foreground">
-              Start your journey in technology with PyroWarden's intensive internship programs
-            </p>
-          </div>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold mb-4">Ready to Start Your Journey?</h2>
+          <p className="text-lg text-muted-foreground mb-8">
+            Browse our available internship positions above and apply to the ones that match your interests and skills.
+          </p>
           
-          <Card>
-            <CardContent className="p-8">
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Full Name *</label>
-                    <input 
-                      type="text" 
-                      className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                      placeholder="Enter your full name"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Email Address *</label>
-                    <input 
-                      type="email" 
-                      className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                      placeholder="Enter your email"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Phone Number *</label>
-                    <input 
-                      type="tel" 
-                      className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                      placeholder="Enter your phone number"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Preferred Program *</label>
-                    <select className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                      <option value="">Select a program</option>
-                      {internshipPrograms.map((program, index) => (
-                        <option key={index} value={program.title}>{program.title}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Education Level *</label>
-                    <select className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                      <option value="">Select education level</option>
-                      <option value="high-school">High School</option>
-                      <option value="undergraduate">Undergraduate</option>
-                      <option value="graduate">Graduate</option>
-                      <option value="postgraduate">Postgraduate</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Experience Level</label>
-                    <select className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                      <option value="beginner">Beginner</option>
-                      <option value="intermediate">Intermediate</option>
-                      <option value="advanced">Advanced</option>
-                    </select>
-                  </div>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium mb-2">Why do you want to join this program? *</label>
-                  <textarea 
-                    rows={4}
-                    className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                    placeholder="Tell us about your motivation and goals..."
-                  ></textarea>
-                </div>
-                
-                <div className="flex items-center gap-2">
-                  <input type="checkbox" id="terms" className="rounded" />
-                  <label htmlFor="terms" className="text-sm text-muted-foreground">
-                    I agree to the terms and conditions and privacy policy *
-                  </label>
-                </div>
-                
-                <Button type="submit" size="lg" className="w-full">
-                  Submit Application
+          {user ? (
+            <div className="space-y-4">
+              <p className="text-muted-foreground">You're signed in and ready to apply!</p>
+              <Button size="lg" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                Browse Internships <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              <p className="text-muted-foreground">Sign in to start applying for internships</p>
+              <Link to="/auth">
+                <Button size="lg">
+                  Sign In to Apply <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
-              </form>
-            </CardContent>
-          </Card>
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 

@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import Careers from "./pages/Careers";
 import Internships from "./pages/Internships";
+import InternshipApplication from "./pages/InternshipApplication";
 import DevelopmentProcess from "./pages/DevelopmentProcess";
 import TechDetails from "./pages/TechDetails";
 import FireCatProject from "./pages/FireCatProject";
@@ -28,6 +29,7 @@ import Admin from "./pages/Admin";
 import ManageUsers from "./pages/admin/ManageUsers";
 import ManageProducts from "./pages/admin/ManageProducts";
 import ManageOrders from "./pages/admin/ManageOrders";
+import ManageInternships from "./pages/admin/ManageInternships";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +46,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/careers" element={<Careers />} />
               <Route path="/internships" element={<Internships />} />
+              <Route path="/internship/:id/apply" element={<InternshipApplication />} />
               <Route path="/process" element={<DevelopmentProcess />} />
               <Route path="/tech-details" element={<TechDetails />} />
               <Route path="/firecat" element={<FireCatProject />} />
@@ -63,6 +66,7 @@ function App() {
               <Route path="/admin/users" element={<ManageUsers />} />
               <Route path="/admin/products" element={<ManageProducts />} />
               <Route path="/admin/orders" element={<ManageOrders />} />
+              <Route path="/admin/internships" element={<ManageInternships />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </AuthProvider>

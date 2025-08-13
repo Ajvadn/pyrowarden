@@ -129,7 +129,7 @@ const EnhancedBlogContent: React.FC<EnhancedBlogContentProps> = ({ content }) =>
           </div>
         );
       
-      case 'chart':
+      case 'chart': {
         if (!section.chartData) return null;
         
         const colors = ['#000000', '#666666', '#999999', '#CCCCCC'];
@@ -170,9 +170,9 @@ const EnhancedBlogContent: React.FC<EnhancedBlogContentProps> = ({ content }) =>
               </div>
             </CardContent>
           </Card>
-        );
+        }
       
-      case 'table':
+      case 'table': {
         if (!section.tableData) return null;
         return (
           <Card key={index} className="border-2 border-black mb-8 overflow-hidden">
@@ -201,9 +201,10 @@ const EnhancedBlogContent: React.FC<EnhancedBlogContentProps> = ({ content }) =>
               </table>
             </CardContent>
           </Card>
-        );
+        )
+      }
       
-      case 'quote':
+      case 'quote': {
         return (
           <Card key={index} className="border-2 border-black bg-black text-white mb-8">
             <CardContent className="p-8 text-center">
@@ -212,10 +213,12 @@ const EnhancedBlogContent: React.FC<EnhancedBlogContentProps> = ({ content }) =>
               </blockquote>
             </CardContent>
           </Card>
-        );
+        )
+      }
       
-      default:
+      default: {
         return null;
+      }
     }
   };
 

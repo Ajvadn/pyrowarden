@@ -20,8 +20,8 @@ interface Order {
   order_number: string;
   status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
   total_amount: number;
-  shipping_address: any;
-  billing_address?: any;
+  shipping_address: Record<string, unknown>;
+  billing_address?: Record<string, unknown>;
   payment_method?: string;
   notes?: string;
   created_at: string;
@@ -83,7 +83,7 @@ const ManageOrders = () => {
         variant: "destructive"
       });
     } else {
-      setOrders((data as any[])?.map(order => ({
+      setOrders((data as Order[])?.map(order => ({
         ...order,
         profiles: order.profiles && !Array.isArray(order.profiles) ? order.profiles : null
       })) || []);

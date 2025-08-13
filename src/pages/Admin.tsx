@@ -4,7 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Users, Package, ShoppingCart, Settings, AlertTriangle, Activity } from 'lucide-react';
+import { Users, Package, ShoppingCart, Settings, AlertTriangle, Activity, GraduationCap } from 'lucide-react';
 import { Link, Navigate } from 'react-router-dom';
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
@@ -155,7 +155,7 @@ const Admin = () => {
         </div>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -202,6 +202,23 @@ const Admin = () => {
               <Link to="/admin/orders">
                 <Button className="w-full" variant="outline">
                   Manage Orders
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <GraduationCap className="h-5 w-5" />
+                Internship Management
+              </CardTitle>
+              <CardDescription>Manage internship positions and applications</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Link to="/admin/internships">
+                <Button className="w-full" variant="outline">
+                  Manage Internships
                 </Button>
               </Link>
             </CardContent>
