@@ -14,6 +14,7 @@ import { toast } from '@/hooks/use-toast';
 import { Navigate } from 'react-router-dom';
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
+import BackButton from '@/components/BackButton';
 
 interface Order {
   id: string;
@@ -200,6 +201,7 @@ const ManageOrders = () => {
       <SEO title="Manage Orders - Admin Panel" description="Manage customer orders and order status" />
       
       <div className="container mx-auto px-4 py-16">
+        <BackButton to="/admin" />
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold flex items-center gap-2">

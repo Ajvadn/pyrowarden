@@ -16,6 +16,7 @@ import { toast } from '@/hooks/use-toast';
 import { Navigate } from 'react-router-dom';
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
+import BackButton from '@/components/BackButton';
 
 interface Product {
   id: string;
@@ -254,6 +255,7 @@ const ManageProducts = () => {
       <SEO title="Manage Products - Admin Panel" description="Manage product catalog and inventory" />
       
       <div className="container mx-auto px-4 py-16">
+        <BackButton to="/admin" />
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold flex items-center gap-2">

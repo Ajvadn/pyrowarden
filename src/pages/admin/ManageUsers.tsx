@@ -7,13 +7,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
-import { Users, Search, UserPlus, Edit, Trash2, Shield, User, Crown } from 'lucide-react';
+import { Users, Search, Edit, Shield, User, Crown, Mail, Calendar } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { Navigate } from 'react-router-dom';
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
+import BackButton from '@/components/BackButton';
 
 interface UserProfile {
   id: string;
@@ -26,13 +27,24 @@ interface UserProfile {
   updated_at: string;
 }
 
+interface UserWithRoles {
+  id: string;
+  user_id: string;
+  email: string;
+  full_name?: string;
+  phone?: string;
+  created_at: string;
+  updated_at: string;
+  roles: string[];
+}
+
 const ManageUsers = () => {
   const { user, isAdmin } = useAuth();
-  const [users, setUsers] = useState<UserProfile[]>([]);
+  const [users, setUsers] = useState<UserWithRoles[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedRole, setSelectedRole] = useState<string>('all');
-  const [editingUser, setEditingUser] = useState<UserProfile | null>(null);
+  const [editingUser, setEditingUser] = useState<UserWithRoles | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [formData, setFormData] = useState({
     full_name: '',
@@ -48,30 +60,56 @@ const ManageUsers = () => {
 
   const fetchUsers = async () => {
     setLoading(true);
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('*')
-      .order('created_at', { ascending: false });
+    try {
+      // Fetch profiles
+      const { data: profiles, error: profilesError } = await supabase
+        .from('profiles')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-    if (error) {
+      if (profilesError) {
+        console.error('Error fetching profiles:', profilesError);
+        toast({
+          title: "Error",
+          description: "Failed to fetch users",
+          variant: "destructive"
+        });
+        setLoading(false);
+        return;
+      }
+
+      // Fetch user roles for each user
+      const usersWithRoles = await Promise.all(
+        (profiles || []).map(async (profile) => {
+          const { data: roles } = await supabase
+            .rpc('get_user_roles', { _user_id: profile.user_id });
+          
+          return {
+            ...profile,
+            roles: roles || []
+          };
+        })
+      );
+
+      setUsers(usersWithRoles);
+    } catch (error) {
       console.error('Error fetching users:', error);
       toast({
         title: "Error",
         description: "Failed to fetch users",
         variant: "destructive"
       });
-    } else {
-      setUsers(data || []);
     }
     setLoading(false);
   };
 
-  const handleEditUser = (user: UserProfile) => {
+  const handleEditUser = (user: UserWithRoles) => {
     setEditingUser(user);
+    const isUserAdmin = user.roles.includes('admin');
     setFormData({
       full_name: user.full_name || '',
       phone: user.phone || '',
-      role: user.role
+      role: isUserAdmin ? 'admin' : 'user'
     });
     setIsEditDialogOpen(true);
   };
@@ -79,22 +117,66 @@ const ManageUsers = () => {
   const handleUpdateUser = async () => {
     if (!editingUser) return;
 
-    const { error } = await supabase
-      .from('profiles')
-      .update({
-        full_name: formData.full_name,
-        phone: formData.phone,
-        role: formData.role as UserProfile['role']
-      })
-      .eq('id', editingUser.id);
+    try {
+      // Update profile
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({
+          full_name: formData.full_name,
+          phone: formData.phone
+        })
+        .eq('id', editingUser.id);
 
-    if (error) {
-      toast({
-        title: "Error",
-        description: "Failed to update user",
-        variant: "destructive"
-      });
-    } else {
+      if (profileError) {
+        toast({
+          title: "Error",
+          description: "Failed to update user profile",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      // Update user roles
+      const currentRoles = editingUser.roles;
+      const newRole = formData.role;
+      const isCurrentlyAdmin = currentRoles.includes('admin');
+      const shouldBeAdmin = newRole === 'admin';
+
+      if (shouldBeAdmin && !isCurrentlyAdmin) {
+        // Add admin role
+        const { error: roleError } = await supabase
+          .from('user_roles')
+          .insert({
+            user_id: editingUser.user_id,
+            role: 'admin'
+          });
+
+        if (roleError) {
+          toast({
+            title: "Error",
+            description: "Failed to add admin role",
+            variant: "destructive"
+          });
+          return;
+        }
+      } else if (!shouldBeAdmin && isCurrentlyAdmin) {
+        // Remove admin role
+        const { error: roleError } = await supabase
+          .from('user_roles')
+          .delete()
+          .eq('user_id', editingUser.user_id)
+          .eq('role', 'admin');
+
+        if (roleError) {
+          toast({
+            title: "Error",
+            description: "Failed to remove admin role",
+            variant: "destructive"
+          });
+          return;
+        }
+      }
+
       toast({
         title: "Success",
         description: "User updated successfully"
@@ -102,61 +184,44 @@ const ManageUsers = () => {
       setIsEditDialogOpen(false);
       setEditingUser(null);
       fetchUsers();
-    }
-  };
-
-  const handleDeleteUser = async (userId: string) => {
-    if (!confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
-      return;
-    }
-
-    const { error } = await supabase
-      .from('profiles')
-      .delete()
-      .eq('id', userId);
-
-    if (error) {
+    } catch (error) {
+      console.error('Error updating user:', error);
       toast({
         title: "Error",
-        description: "Failed to delete user",
+        description: "Failed to update user",
         variant: "destructive"
       });
-    } else {
-      toast({
-        title: "Success",
-        description: "User deleted successfully"
-      });
-      fetchUsers();
     }
   };
 
-  const getRoleIcon = (role: string) => {
-    switch (role) {
-      case 'admin':
-        return <Crown className="h-4 w-4" />;
-      case 'moderator':
-        return <Shield className="h-4 w-4" />;
-      default:
-        return <User className="h-4 w-4" />;
+  const getRoleIcon = (roles: string[]) => {
+    if (roles.includes('admin')) {
+      return <Crown className="h-4 w-4" />;
     }
+    return <User className="h-4 w-4" />;
   };
 
-  const getRoleBadgeVariant = (role: string) => {
-    switch (role) {
-      case 'admin':
-        return 'default';
-      case 'moderator':
-        return 'secondary';
-      default:
-        return 'outline';
+  const getRoleBadgeVariant = (roles: string[]) => {
+    if (roles.includes('admin')) {
+      return 'default';
     }
+    return 'outline';
+  };
+
+  const getRoleDisplay = (roles: string[]) => {
+    if (roles.includes('admin')) {
+      return 'Admin';
+    }
+    return 'User';
   };
 
   // Filter users based on search and role
   const filteredUsers = users.filter(user => {
     const matchesSearch = user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          (user.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false);
-    const matchesRole = selectedRole === 'all' || user.role === selectedRole;
+    const matchesRole = selectedRole === 'all' || 
+                       (selectedRole === 'admin' && user.roles.includes('admin')) ||
+                       (selectedRole === 'user' && !user.roles.includes('admin'));
     return matchesSearch && matchesRole;
   });
 
@@ -170,6 +235,7 @@ const ManageUsers = () => {
       <SEO title="Manage Users - Admin Panel" description="Manage user accounts and permissions" />
       
       <div className="container mx-auto px-4 py-16">
+        <BackButton to="/admin" />
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold flex items-center gap-2">
@@ -178,6 +244,32 @@ const ManageUsers = () => {
             </h1>
             <p className="text-muted-foreground">Manage user accounts, roles, and permissions</p>
           </div>
+        </div>
+
+        {/* User Statistics */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <Card>
+            <CardContent className="p-4 text-center">
+              <div className="text-2xl font-bold">{users.length}</div>
+              <div className="text-xs text-muted-foreground">Total Users</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-4 text-center">
+              <div className="text-2xl font-bold text-blue-600">
+                {users.filter(u => u.roles.includes('admin')).length}
+              </div>
+              <div className="text-xs text-muted-foreground">Admins</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-4 text-center">
+              <div className="text-2xl font-bold text-green-600">
+                {users.filter(u => !u.roles.includes('admin')).length}
+              </div>
+              <div className="text-xs text-muted-foreground">Regular Users</div>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Filters */}
@@ -232,7 +324,7 @@ const ManageUsers = () => {
                     <TableRow>
                       <TableHead>User</TableHead>
                       <TableHead>Role</TableHead>
-                      <TableHead>Phone</TableHead>
+                      <TableHead>Contact</TableHead>
                       <TableHead>Joined</TableHead>
                       <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
@@ -243,22 +335,26 @@ const ManageUsers = () => {
                         <TableCell>
                           <div>
                             <div className="font-medium">{user.full_name || 'No name'}</div>
-                            <div className="text-sm text-muted-foreground">{user.email}</div>
+                            <div className="text-sm text-muted-foreground flex items-center gap-1">
+                              <Mail className="h-3 w-3" />
+                              {user.email}
+                            </div>
                           </div>
                         </TableCell>
                         <TableCell>
-                          <Badge variant={getRoleBadgeVariant(user.role)} className="flex items-center gap-1 w-fit">
-                            {getRoleIcon(user.role)}
-                            {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+                          <Badge variant={getRoleBadgeVariant(user.roles)} className="flex items-center gap-1 w-fit">
+                            {getRoleIcon(user.roles)}
+                            {getRoleDisplay(user.roles)}
                           </Badge>
                         </TableCell>
                         <TableCell>
                           <span className="text-sm">{user.phone || 'Not provided'}</span>
                         </TableCell>
                         <TableCell>
-                          <span className="text-sm">
+                          <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                            <Calendar className="h-3 w-3" />
                             {new Date(user.created_at).toLocaleDateString()}
-                          </span>
+                          </div>
                         </TableCell>
                         <TableCell className="text-right">
                           <div className="flex justify-end gap-2">
@@ -268,14 +364,6 @@ const ManageUsers = () => {
                               onClick={() => handleEditUser(user)}
                             >
                               <Edit className="h-4 w-4" />
-                            </Button>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => handleDeleteUser(user.id)}
-                              className="text-destructive hover:text-destructive"
-                            >
-                              <Trash2 className="h-4 w-4" />
                             </Button>
                           </div>
                         </TableCell>

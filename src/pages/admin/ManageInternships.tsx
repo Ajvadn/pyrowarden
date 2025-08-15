@@ -17,6 +17,7 @@ import { Navigate, Link } from 'react-router-dom';
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
 import { toast } from 'sonner';
+import BackButton from '@/components/BackButton';
 
 interface Internship {
   id: string;
@@ -289,6 +290,7 @@ const ManageInternships = () => {
       <SEO title="Manage Internships - Admin Panel" description="Manage internship positions and applications" />
       
       <div className="container mx-auto px-4 py-16">
+        <BackButton to="/admin" />
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold">Internship Management</h1>

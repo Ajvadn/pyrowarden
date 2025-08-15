@@ -1,25 +1,30 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Shield background -->
-  <path d="M16 2L28 8V16C28 22.6274 22.6274 28 16 28C9.37258 28 4 22.6274 4 16V8L16 2Z" fill="#1e40af" stroke="#1e3a8a" stroke-width="1"/>
-  
-  <!-- Shield highlight -->
-  <path d="M16 2L28 8V16C28 22.6274 22.6274 28 16 28C9.37258 28 4 22.6274 4 16V8L16 2Z" fill="url(#shieldGradient)" opacity="0.8"/>
-  
-  <!-- Lock body -->
-  <rect x="12" y="14" width="8" height="6" rx="1" fill="#fbbf24" stroke="#f59e0b" stroke-width="0.5"/>
-  
-  <!-- Lock shackle -->
-  <path d="M14 14V12C14 10.8954 14.8954 10 16 10C17.1046 10 18 10.8954 18 12V14" stroke="#f59e0b" stroke-width="1.5" fill="none"/>
-  
-  <!-- Keyhole -->
-  <circle cx="16" cy="16" r="1" fill="#1e3a8a"/>
-  <rect x="15.5" y="16" width="1" height="2" fill="#1e3a8a"/>
-  
-  <!-- Gradient definitions -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Background circle with gradient -->
   <defs>
-    <linearGradient id="shieldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#1e40af;stop-opacity:1" />
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1a1a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="tealGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00b8e6;stop-opacity:1" />
     </linearGradient>
   </defs>
+  
+  <!-- Background -->
+  <circle cx="16" cy="16" r="15" fill="url(#bgGradient)" stroke="url(#tealGradient)" stroke-width="1"/>
+  
+  <!-- Terminal-style frame -->
+  <rect x="8" y="10" width="16" height="12" rx="1.5" fill="none" stroke="url(#tealGradient)" stroke-width="1.5"/>
+  
+  <!-- Terminal window dots -->
+  <circle cx="12" cy="13" r="1.2" fill="#ff6b6b"/>
+  <circle cx="15" cy="13" r="1.2" fill="#ffd93d"/>
+  <circle cx="18" cy="13" r="1.2" fill="#6bcf7f"/>
+  
+  <!-- "P" letter (simplified pyro) -->
+  <path d="M12 16 L12 20 L16 20 L16 18 L14 18 L14 17 L16 17 L16 16 Z" fill="url(#tealGradient)"/>
+  
+  <!-- Cursor underscore -->
+  <line x1="18" y1="21" x2="22" y2="21" stroke="url(#tealGradient)" stroke-width="1.5" stroke-linecap="round"/>
 </svg>

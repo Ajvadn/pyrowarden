@@ -170,7 +170,8 @@ const EnhancedBlogContent: React.FC<EnhancedBlogContentProps> = ({ content }) =>
               </div>
             </CardContent>
           </Card>
-        }
+        );
+      }
       
       case 'table': {
         if (!section.tableData) return null;
