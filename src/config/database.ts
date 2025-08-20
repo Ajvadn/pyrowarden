@@ -3,8 +3,8 @@
 
 export const DATABASE_CONFIG = {
   // Supabase Configuration
-  SUPABASE_URL: "https://rkwgjrlydhaoqjibrurh.supabase.co",
-  SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJrd2dqcmx5ZGhhb3FqaWJydXJoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUyODQyMTMsImV4cCI6MjA3MDg2MDIxM30.B4iXxdMLnZTiJHNdZBw8U7iswmRXM1oCJyYvvBzfIss",
+  SUPABASE_URL: import.meta.env.VITE_SUPABASE_URL,
+  SUPABASE_ANON_KEY: import.meta.env.VITE_SUPABASE_ANON_KEY,
   
   // Project Information
   PROJECT_ID: "rkwgjrlydhaoqjibrurh",
