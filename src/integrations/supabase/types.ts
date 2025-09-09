@@ -49,6 +49,185 @@ export type Database = {
           },
         ]
       }
+      internship_applications: {
+        Row: {
+          admin_notes: string | null
+          availability_end: string | null
+          availability_start: string | null
+          cover_letter: string | null
+          created_at: string | null
+          current_education: string | null
+          expected_graduation_date: string | null
+          github_url: string | null
+          id: string
+          internship_id: string | null
+          linkedin_url: string | null
+          notes: string | null
+          portfolio_url: string | null
+          relevant_experience: string | null
+          resume_url: string | null
+          skills: string[] | null
+          status: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          availability_end?: string | null
+          availability_start?: string | null
+          cover_letter?: string | null
+          created_at?: string | null
+          current_education?: string | null
+          expected_graduation_date?: string | null
+          github_url?: string | null
+          id?: string
+          internship_id?: string | null
+          linkedin_url?: string | null
+          notes?: string | null
+          portfolio_url?: string | null
+          relevant_experience?: string | null
+          resume_url?: string | null
+          skills?: string[] | null
+          status?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          admin_notes?: string | null
+          availability_end?: string | null
+          availability_start?: string | null
+          cover_letter?: string | null
+          created_at?: string | null
+          current_education?: string | null
+          expected_graduation_date?: string | null
+          github_url?: string | null
+          id?: string
+          internship_id?: string | null
+          linkedin_url?: string | null
+          notes?: string | null
+          portfolio_url?: string | null
+          relevant_experience?: string | null
+          resume_url?: string | null
+          skills?: string[] | null
+          status?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "internship_applications_internship_id_fkey"
+            columns: ["internship_id"]
+            isOneToOne: false
+            referencedRelation: "internships"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      internships: {
+        Row: {
+          benefits: string[] | null
+          created_at: string | null
+          current_applications: number | null
+          department: string
+          description: string
+          duration: string
+          end_date: string | null
+          id: string
+          location: string
+          max_applications: number | null
+          requirements: string[] | null
+          responsibilities: string[] | null
+          salary_range: string | null
+          start_date: string | null
+          status: string | null
+          title: string
+          type: string
+          updated_at: string | null
+        }
+        Insert: {
+          benefits?: string[] | null
+          created_at?: string | null
+          current_applications?: number | null
+          department: string
+          description: string
+          duration: string
+          end_date?: string | null
+          id?: string
+          location: string
+          max_applications?: number | null
+          requirements?: string[] | null
+          responsibilities?: string[] | null
+          salary_range?: string | null
+          start_date?: string | null
+          status?: string | null
+          title: string
+          type: string
+          updated_at?: string | null
+        }
+        Update: {
+          benefits?: string[] | null
+          created_at?: string | null
+          current_applications?: number | null
+          department?: string
+          description?: string
+          duration?: string
+          end_date?: string | null
+          id?: string
+          location?: string
+          max_applications?: number | null
+          requirements?: string[] | null
+          responsibilities?: string[] | null
+          salary_range?: string | null
+          start_date?: string | null
+          status?: string | null
+          title?: string
+          type?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      order_items: {
+        Row: {
+          created_at: string | null
+          id: string
+          order_id: string | null
+          price: number
+          product_id: string | null
+          quantity: number
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          order_id?: string | null
+          price: number
+          product_id?: string | null
+          quantity?: number
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          order_id?: string | null
+          price?: number
+          product_id?: string | null
+          quantity?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       orders: {
         Row: {
           billing_address: Json | null
