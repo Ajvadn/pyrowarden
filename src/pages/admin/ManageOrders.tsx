@@ -21,8 +21,20 @@ interface Order {
   order_number: string;
   status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
   total_amount: number;
-  shipping_address: Record<string, unknown>;
-  billing_address?: Record<string, unknown>;
+  shipping_address: {
+    street?: string;
+    city?: string;
+    state?: string;
+    zip?: string;
+    country?: string;
+  } | null;
+  billing_address?: {
+    street?: string;
+    city?: string;
+    state?: string;
+    zip?: string;
+    country?: string;
+  } | null;
   payment_method?: string;
   notes?: string;
   created_at: string;

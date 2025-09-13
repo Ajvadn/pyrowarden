@@ -18,7 +18,7 @@ interface UserProfile {
   email: string;
   full_name?: string;
   phone?: string;
-  role: string;
+  role?: string;
   created_at: string;
 }
 

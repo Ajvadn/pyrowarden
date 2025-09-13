@@ -50,7 +50,7 @@ const Internships = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setInternships(data || []);
+      setInternships((data || []) as Internship[]);
     } catch (error) {
       console.error('Error fetching internships:', error);
       toast.error('Failed to fetch internships');

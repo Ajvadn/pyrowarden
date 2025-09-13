@@ -73,7 +73,7 @@ const InternshipApplication = () => {
         .single();
 
       if (error) throw error;
-      setInternship(data);
+      setInternship(data as Internship);
     } catch (error) {
       console.error('Error fetching internship:', error);
       toast.error('Failed to fetch internship details');

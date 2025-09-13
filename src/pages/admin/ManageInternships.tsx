@@ -61,9 +61,9 @@ interface InternshipApplication {
   created_at: string;
   updated_at: string;
   user_profile?: {
-    full_name: string;
-    email: string;
-  };
+    full_name?: string;
+    email?: string;
+  } | null;
   internship?: {
     title: string;
   };
@@ -76,7 +76,22 @@ const ManageInternships = () => {
   const [loading, setLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingInternship, setEditingInternship] = useState<Internship | null>(null);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    title: string;
+    description: string;
+    requirements: string[];
+    responsibilities: string[];
+    duration: string;
+    location: string;
+    type: string;
+    department: string;
+    salary_range: string;
+    benefits: string[];
+    status: 'open' | 'closed' | 'in_progress' | 'completed';
+    max_applications: string;
+    start_date: string;
+    end_date: string;
+  }>({
     title: '',
     description: '',
     requirements: [''],
@@ -87,7 +102,7 @@ const ManageInternships = () => {
     department: '',
     salary_range: '',
     benefits: [''],
-    status: 'open' as const,
+    status: 'open' as 'open' | 'closed' | 'in_progress' | 'completed',
     max_applications: '',
     start_date: '',
     end_date: '',
@@ -108,7 +123,7 @@ const ManageInternships = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setInternships(data || []);
+      setInternships((data || []) as Internship[]);
     } catch (error) {
       console.error('Error fetching internships:', error);
       toast.error('Failed to fetch internships');
@@ -127,7 +142,7 @@ const ManageInternships = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setApplications(data || []);
+      setApplications((data || []) as InternshipApplication[]);
     } catch (error) {
       console.error('Error fetching applications:', error);
       toast.error('Failed to fetch applications');
