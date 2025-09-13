@@ -414,6 +414,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      check_profiles_security_status: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
       generate_order_number: {
         Args: Record<PropertyKey, never>
         Returns: string
