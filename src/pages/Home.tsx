@@ -14,7 +14,7 @@ import Projects from '@/components/Projects';
 import WhyWrlds from '@/components/WhyWrlds';
 
 /**
- * Index Component
+ * Home Component
  * 
  * Renders the home page with all main sections:
  * - Hero section with call-to-action
@@ -23,12 +23,12 @@ import WhyWrlds from '@/components/WhyWrlds';
  * - Why choose Pyrowarden section
  * - Contact information
  */
-const Index: React.FC = () => {
+const Home: React.FC = () => {
   useEffect(() => {
-    console.log('Index component: Component mounted successfully');
+    console.log('Home component: Component mounted successfully');
   }, []);
 
-  console.log('Index component: Rendering...');
+  console.log('Home component: Rendering...');
 
   return (
     <PageLayout>
@@ -56,4 +56,4 @@ const Index: React.FC = () => {
   );
 };
 
-export default Index;
+export default Home;
