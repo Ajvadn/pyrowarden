@@ -157,7 +157,7 @@ const Dashboard = () => {
               <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">${stats.totalSpent.toFixed(2)}</div>
+              <div className="text-2xl font-bold">₹{stats.totalSpent.toFixed(2)}</div>
             </CardContent>
           </Card>
 
@@ -216,7 +216,7 @@ const Dashboard = () => {
                       <Badge variant={getStatusColor(order.status)}>
                         {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
                       </Badge>
-                      <span className="font-semibold">${order.total_amount.toFixed(2)}</span>
+                      <span className="font-semibold">₹{order.total_amount.toFixed(2)}</span>
                     </div>
                   </div>
                 ))}

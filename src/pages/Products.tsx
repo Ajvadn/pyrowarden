@@ -131,10 +131,10 @@ const Products = () => {
                     </p>
                   )}
                   <div className="flex items-center gap-2 mb-3">
-                    <span className="text-lg font-bold">${product.price}</span>
+                    <span className="text-lg font-bold">₹{product.price}</span>
                     {product.compare_price && product.compare_price > product.price && (
                       <span className="text-sm text-muted-foreground line-through">
-                        ${product.compare_price}
+                        ₹{product.compare_price}
                       </span>
                     )}
                   </div>

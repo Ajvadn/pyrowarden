@@ -97,7 +97,7 @@ const Cart = () => {
                         </Link>
                       </h3>
                       <p className="text-lg font-bold mb-3">
-                        ${item.product.price}
+                        ₹{item.product.price}
                       </p>
 
                       <div className="flex items-center justify-between">
@@ -127,7 +127,7 @@ const Cart = () => {
 
                         <div className="flex items-center gap-4">
                           <span className="font-semibold">
-                            ${(item.product.price * item.quantity).toFixed(2)}
+                            ₹{(item.product.price * item.quantity).toFixed(2)}
                           </span>
                           <Button
                             variant="ghost"
@@ -155,7 +155,7 @@ const Cart = () => {
               <CardContent className="space-y-4">
                 <div className="flex justify-between">
                   <span>Subtotal</span>
-                  <span>${totalPrice.toFixed(2)}</span>
+                  <span>₹{totalPrice.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Shipping</span>
@@ -164,7 +164,7 @@ const Cart = () => {
                 <div className="border-t pt-4">
                   <div className="flex justify-between font-bold text-lg">
                     <span>Total</span>
-                    <span>${totalPrice.toFixed(2)}</span>
+                    <span>₹{totalPrice.toFixed(2)}</span>
                   </div>
                 </div>
                 

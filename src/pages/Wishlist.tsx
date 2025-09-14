@@ -103,10 +103,10 @@ const Wishlist = () => {
                   </Link>
                 </h3>
                 <div className="flex items-center gap-2">
-                  <span className="text-lg font-bold">${item.product.price}</span>
+                  <span className="text-lg font-bold">₹{item.product.price}</span>
                   {item.product.compare_price && item.product.compare_price > item.product.price && (
                     <span className="text-sm text-muted-foreground line-through">
-                      ${item.product.compare_price}
+                      ₹{item.product.compare_price}
                     </span>
                   )}
                 </div>

@@ -264,7 +264,7 @@ const ManageOrders = () => {
           </Card>
           <Card>
             <CardContent className="p-4 text-center">
-              <div className="text-lg font-bold text-green-600">${stats.totalRevenue.toFixed(0)}</div>
+              <div className="text-lg font-bold text-green-600">₹{stats.totalRevenue.toFixed(0)}</div>
               <div className="text-xs text-muted-foreground">Revenue</div>
             </CardContent>
           </Card>
@@ -349,7 +349,7 @@ const ManageOrders = () => {
                           </div>
                         </TableCell>
                         <TableCell>
-                          <span className="font-medium">${order.total_amount.toFixed(2)}</span>
+                          <span className="font-medium">₹{order.total_amount.toFixed(2)}</span>
                         </TableCell>
                         <TableCell>
                           <Badge variant={getStatusBadgeVariant(order.status)}>
@@ -421,7 +421,7 @@ const ManageOrders = () => {
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Total Amount:</span>
-                        <span className="font-bold text-lg">${selectedOrder.total_amount.toFixed(2)}</span>
+                        <span className="font-bold text-lg">₹{selectedOrder.total_amount.toFixed(2)}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Payment Method:</span>
@@ -504,11 +504,11 @@ const ManageOrders = () => {
                           <div className="flex-1">
                             <h4 className="font-medium">{item.product.name}</h4>
                             <div className="text-sm text-muted-foreground">
-                              Quantity: {item.quantity} × ${item.price.toFixed(2)}
+                              Quantity: {item.quantity} × ₹{item.price.toFixed(2)}
                             </div>
                           </div>
                           <div className="text-right">
-                            <div className="font-medium">${(item.quantity * item.price).toFixed(2)}</div>
+                            <div className="font-medium">₹{(item.quantity * item.price).toFixed(2)}</div>
                           </div>
                         </div>
                       ))}
