@@ -125,10 +125,10 @@ const Projects = () => {
   };
 
   const getCardAnimationClass = (index: number) => {
-    if (index === activeProject) return "scale-100 opacity-100 z-20";
-    if (index === (activeProject + 1) % projects.length) return "translate-x-[40%] scale-95 opacity-60 z-10";
-    if (index === (activeProject - 1 + projects.length) % projects.length) return "translate-x-[-40%] scale-95 opacity-60 z-10";
-    return "scale-90 opacity-0";
+    if (index === activeProject) return "scale-100 opacity-100 z-20 translate3d(0,0,0)";
+    if (index === (activeProject + 1) % projects.length) return "translate-x-[40%] scale-95 opacity-60 z-10 translate3d(0,0,0)";
+    if (index === (activeProject - 1 + projects.length) % projects.length) return "translate-x-[-40%] scale-95 opacity-60 z-10 translate3d(0,0,0)";
+    return "scale-90 opacity-0 translate3d(0,0,0)";
   };
   
   return <section id="projects" ref={projectsRef} className="bg-white py-[50px] w-full">
@@ -167,7 +167,7 @@ const Projects = () => {
             {projects.map((project, index) => (
               <div 
                 key={project.id} 
-                className={`absolute top-0 w-full max-w-md transform transition-all duration-500 ${getCardAnimationClass(index)}`} 
+                className={`absolute top-0 w-full max-w-md will-change-transform transition-transform transition-opacity duration-500 ease-out ${getCardAnimationClass(index)}`} 
                 style={{ transitionDelay: `${index * 50}ms` }}
               >
                 <Card className="overflow-hidden h-[500px] border border-gray-100 shadow-sm hover:shadow-md flex flex-col">
@@ -219,7 +219,7 @@ const Projects = () => {
           {!isMobile && (
             <>
               <button 
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 rounded-full flex items-center justify-center text-gray-500 hover:bg-white z-30 shadow-md transition-all duration-300 hover:scale-110" 
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 rounded-full flex items-center justify-center text-gray-500 hover:bg-white z-30 shadow-md transition-transform transition-colors duration-300 hover:scale-110 will-change-transform" 
                 onClick={() => setActiveProject(prev => (prev - 1 + projects.length) % projects.length)}
                 aria-label="Previous project"
               >
@@ -227,7 +227,7 @@ const Projects = () => {
               </button>
               
               <button 
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 rounded-full flex items-center justify-center text-gray-500 hover:bg-white z-30 shadow-md transition-all duration-300 hover:scale-110" 
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 rounded-full flex items-center justify-center text-gray-500 hover:bg-white z-30 shadow-md transition-transform transition-colors duration-300 hover:scale-110 will-change-transform" 
                 onClick={() => setActiveProject(prev => (prev + 1) % projects.length)}
                 aria-label="Next project"
               >
@@ -240,7 +240,7 @@ const Projects = () => {
             {projects.map((_, idx) => (
               <button 
                 key={idx} 
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${activeProject === idx ? 'bg-gray-500 w-5' : 'bg-gray-200 hover:bg-gray-300'}`} 
+                className={`w-2 h-2 rounded-full transition-colors transition-[width] duration-300 ${activeProject === idx ? 'bg-gray-500 w-5' : 'bg-gray-200 hover:bg-gray-300'}`} 
                 onClick={() => setActiveProject(idx)}
                 aria-label={`Go to project ${idx + 1}`}
               />

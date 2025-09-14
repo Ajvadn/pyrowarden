@@ -111,7 +111,7 @@ const Hero: React.FC = () => {
                 variants={itemVariants}
               >
                 <button 
-                  className="w-full sm:w-auto min-h-[40px] sm:min-h-[44px] px-4 sm:px-6 py-2 sm:py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all shadow-lg hover:shadow-xl hover:shadow-gray-300/20 flex items-center justify-center group text-sm font-medium"
+                  className="w-full sm:w-auto min-h-[40px] sm:min-h-[44px] px-4 sm:px-6 py-2 sm:py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors transition-shadow shadow-lg hover:shadow-xl hover:shadow-gray-300/20 flex items-center justify-center group text-sm font-medium"
                   onClick={scrollToProjects}
                 >
                   Shop Products
@@ -119,7 +119,7 @@ const Hero: React.FC = () => {
                 </button>
                 
                 <button 
-                  className="w-full sm:w-auto min-h-[40px] sm:min-h-[44px] px-4 sm:px-6 py-2 sm:py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl hover:shadow-gray-300/20 flex items-center justify-center group text-sm font-medium"
+                  className="w-full sm:w-auto min-h-[40px] sm:min-h-[44px] px-4 sm:px-6 py-2 sm:py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition-colors transition-shadow shadow-lg hover:shadow-xl hover:shadow-gray-300/20 flex items-center justify-center group text-sm font-medium"
                   onClick={navigateToInternships}
                 >
                   Join Internships
@@ -142,7 +142,7 @@ const Hero: React.FC = () => {
         >
           {/* Tech Internships Card */}
           <motion.div 
-            className="bg-white p-3 sm:p-4 md:p-5 rounded-xl shadow-sm border border-gray-100 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-md" 
+            className="bg-white p-3 sm:p-4 md:p-5 rounded-xl shadow-sm border border-gray-100 transition-transform transition-shadow duration-300 hover:-translate-y-1 hover:shadow-md will-change-transform"
             variants={itemVariants}
           >
             <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gray-100 flex items-center justify-center rounded-lg text-gray-500 mb-2 sm:mb-3">
@@ -158,7 +158,7 @@ const Hero: React.FC = () => {
           
           {/* RFID & NFC Tools Card */}
           <motion.div 
-            className="bg-white p-3 sm:p-4 md:p-5 rounded-xl shadow-sm border border-gray-100 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-md" 
+            className="bg-white p-3 sm:p-4 md:p-5 rounded-xl shadow-sm border border-gray-100 transition-transform transition-shadow duration-300 hover:-translate-y-1 hover:shadow-md will-change-transform" 
             variants={itemVariants}
           >
             <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gray-100 flex items-center justify-center rounded-lg text-gray-500 mb-2 sm:mb-3">
@@ -174,7 +174,7 @@ const Hero: React.FC = () => {
           
           {/* Professional Training Card */}
           <motion.div 
-            className="bg-white p-3 sm:p-4 md:p-5 rounded-xl shadow-sm border border-gray-100 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-md sm:col-span-2 lg:col-span-1" 
+            className="bg-white p-3 sm:p-4 md:p-5 rounded-xl shadow-sm border border-gray-100 transition-transform transition-shadow duration-300 hover:-translate-y-1 hover:shadow-md sm:col-span-2 lg:col-span-1 will-change-transform" 
             variants={itemVariants}
           >
             <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gray-100 flex items-center justify-center rounded-lg text-gray-500 mb-2 sm:mb-3">

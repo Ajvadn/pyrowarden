@@ -110,7 +110,7 @@ const Features = () => {
             <Card 
               key={index}
               className={cn(
-                "feature-card group cursor-pointer border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden bg-white",
+                "feature-card group cursor-pointer border-0 shadow-lg hover:shadow-2xl transition-shadow transition-transform duration-500 overflow-hidden bg-white will-change-transform",
                 "transform hover:-translate-y-2 hover:scale-105",
                 "opacity-0 translate-y-8"
               )}
@@ -175,7 +175,7 @@ const Features = () => {
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="w-full text-xs group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 transition-all duration-300"
+                    className="w-full text-xs group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 transition-colors transition-[border-color] duration-300"
                   >
                     Learn More
                     <ArrowRight className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform" />
